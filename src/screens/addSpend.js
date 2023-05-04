@@ -1,6 +1,7 @@
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Text, TextInput, View } from "react-native";
 import { colors, customizeText, globalStyles } from "../styles/styles";
 import SelectTypeSpend from "../components/formAdd/SelectTypeSpend";
+import SelectFromCalendar from "../components/formAdd/SelectFromCalendar";
 
 const AddSpend = () => {
   return (
@@ -24,11 +25,7 @@ const AddSpend = () => {
             style={{ ...globalStyles.input, width: "45%" }}
             keyboardType="decimal-pad"
           />
-          <TouchableOpacity style={{ ...globalStyles.input, width: "45%" }}>
-            <Text style={customizeText(16, "M", "TG", "left")}>
-              ¿Cúando pasó?
-            </Text>
-          </TouchableOpacity>
+          <SelectFromCalendar />
         </View>
         <SelectTypeSpend />
       </View>

@@ -98,4 +98,10 @@ export const globalStyles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: colors.orange,
   },
+  line: {
+    width: "100%",
+    height: 1.5,
+    backgroundColor: colors.gray_1,
+    marginVertical: 15,
+  }
 });

@@ -2,6 +2,17 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { customizeText, globalStyles } from "../../styles/styles";
 
 const SelectTypeSpend = () => {
+  const typeSpend = [
+    { text: "Fijo" },
+    { text: "Suscripción" },
+    { text: "Espontaneo" },
+    { text: "Emergencia" },
+    { text: "Ocio" },
+    { text: "Entretenimiento" },
+    { text: "Inversión" },
+    { text: "Personales" },
+  ];
+
   return (
     <View style={globalStyles.input}>
       <Text style={customizeText(16, "M", "TG", "left")}>
@@ -15,32 +26,13 @@ const SelectTypeSpend = () => {
           marginTop: 10,
         }}
       >
-        <TouchableOpacity style={globalStyles.option}>
-          <Text style={customizeText(16, "M", "N", "center")}>Fijo</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={globalStyles.option}>
-          <Text style={customizeText(16, "M", "N", "center")}>Suscripción</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={globalStyles.option}>
-          <Text style={customizeText(16, "M", "N", "center")}>Espontaneo</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={globalStyles.option}>
-          <Text style={customizeText(16, "M", "N", "center")}>Emergencia</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={globalStyles.option}>
-          <Text style={customizeText(16, "M", "N", "center")}>Ocio</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={globalStyles.option}>
-          <Text style={customizeText(16, "M", "N", "center")}>
-            Entretenimiento
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={globalStyles.option}>
-          <Text style={customizeText(16, "M", "N", "center")}>Inversión</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={globalStyles.option}>
-          <Text style={customizeText(16, "M", "N", "center")}>Personales</Text>
-        </TouchableOpacity>
+        {typeSpend.map((item) => (
+          <TouchableOpacity key={item.text.split(0,3) + "A"} style={globalStyles.option}>
+            <Text
+              style={customizeText(16, "M", "N", "center")}
+            >{`${item.text}`}</Text>
+          </TouchableOpacity>
+        ))}
       </View>
     </View>
   );

@@ -20,7 +20,6 @@ export default function App() {
     "Roboto-Bold": require("./src/assets/fonts/Roboto-Bold.ttf"),
   });
 
-  //TODO expo-splash-screen install
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
       await SplashScreen.hideAsync();
