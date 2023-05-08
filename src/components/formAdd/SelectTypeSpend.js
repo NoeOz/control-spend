@@ -1,17 +1,27 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import { customizeText, globalStyles } from "../../styles/styles";
 
-const SelectTypeSpend = () => {
+const SelectTypeSpend = ({ selectedType, onSelectType }) => {
   const typeSpend = [
-    { text: "Fijo" },
-    { text: "Suscripción" },
-    { text: "Espontaneo" },
-    { text: "Emergencia" },
-    { text: "Ocio" },
-    { text: "Entretenimiento" },
-    { text: "Inversión" },
-    { text: "Personales" },
+    "Fijo",
+    "Suscripción",
+    "Espontaneo",
+    "Emergencia",
+    "Ocio",
+    "Entretenimiento",
+    "Inversión",
+    "Personales",
+    "Otro",
   ];
+
+  function itemSelected(item) {
+    if (item === selectedType) return globalStyles.optionSelected;
+    else return globalStyles.option;
+  }
+
+  function selectType(spend) {
+    onSelectType("typeSpend", spend);
+  }
 
   return (
     <View style={globalStyles.input}>
@@ -27,10 +37,14 @@ const SelectTypeSpend = () => {
         }}
       >
         {typeSpend.map((item) => (
-          <TouchableOpacity key={item.text.split(0,3) + "A"} style={globalStyles.option}>
+          <TouchableOpacity
+            key={item.split(0, 3) + "A"}
+            style={itemSelected(item)}
+            onPress={() => selectType(item)}
+          >
             <Text
               style={customizeText(16, "M", "N", "center")}
-            >{`${item.text}`}</Text>
+            >{`${item}`}</Text>
           </TouchableOpacity>
         ))}
       </View>

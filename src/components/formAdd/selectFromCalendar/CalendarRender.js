@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { daysEsp, monthsEsp } from "../../constants/calendarData";
-import { colors, customizeText, globalStyles } from "../../styles/styles";
-import { TraslucentModal } from "../modals/TraslucentModal";
+import { daysEsp, monthsEsp } from "../../../constants/calendarData";
+import { colors, customizeText, globalStyles } from "../../../styles/styles";
+import { TraslucentModal } from "../../modals/TraslucentModal";
 import { Feather } from "@expo/vector-icons";
 
 const CalendarRender = ({ show, changeShow, setSelectedDate }) => {
@@ -24,6 +24,9 @@ const CalendarRender = ({ show, changeShow, setSelectedDate }) => {
     setCurrentYear(0);
   }
 
+  /**
+   * The function generates a matrix of days for each month of the current year.
+   */
   const showDays = () => {
     const { month, year } = getActualYearMonth();
     setCurrentYear(year);
@@ -34,6 +37,10 @@ const CalendarRender = ({ show, changeShow, setSelectedDate }) => {
     setLoadedDays(true);
   };
 
+  /**
+   * The function returns the current month and year as an object.
+   * @returns An object with the current month and year as properties.
+   */
   function getActualYearMonth() {
     const fecha = new Date();
     // Obtener el mes y año actual
@@ -42,6 +49,11 @@ const CalendarRender = ({ show, changeShow, setSelectedDate }) => {
     return { month, year };
   }
 
+  /**
+   * Function to generate an Array of Arrays of weeks making a Matrix
+   * @param {Number} month Number of month
+   * @param {Number} year Number of Year
+   */
   function generateDaysMatrix(month, year) {
     // Obtener la cantidad de días en el mes seleccionado
     const cantidadDias = new Date(year, month, 0).getDate();
@@ -89,6 +101,11 @@ const CalendarRender = ({ show, changeShow, setSelectedDate }) => {
     setDaysMatrix((oldDaysMatrix) => [...oldDaysMatrix, matrizDias]);
   }
 
+  /**
+   * This is a JavaScript function that returns a row of days in Spanish abbreviated format.
+   * @returns The `RowNameDays` component is being returned, which renders a row of days of the week in
+   * Spanish abbreviated form.
+   */
   const RowNameDays = () => {
     return (
       <View style={style.rowBeetwn}>
@@ -105,11 +122,21 @@ const CalendarRender = ({ show, changeShow, setSelectedDate }) => {
     );
   };
 
+  /**
+   * The function sets the selected date to a specific day in the current month and year, and then
+   * hides the date picker.
+   * @param day - The day parameter is a variable that represents the day of the month that was pressed
+   * by the user. It is passed as an argument to the pressedDay function.
+   */
   function pressedDay(day) {
     setSelectedDate({ DD: day, MM: currentMonth, YYYY: currentYear });
     changeShow(false);
   }
 
+  /**
+   * The function renders a calendar with days organized in rows and columns.
+   * @returns A component that renders a calendar with days of the current month
+   */
   const RenderDaysCalendar = () => {
     return (
       <View>
@@ -134,6 +161,11 @@ const CalendarRender = ({ show, changeShow, setSelectedDate }) => {
     );
   };
 
+  /**
+   * The function controls the current month by adding or subtracting a given value.
+   * @param value - The amount by which the current month is to be incremented or decremented. It can
+   * be a positive or negative integer.
+   */
   function controlMonth(value) {
     const newMonth = currentMonth + value;
     if (newMonth <= 12 && newMonth >= 1) setCurrentMonth(newMonth);

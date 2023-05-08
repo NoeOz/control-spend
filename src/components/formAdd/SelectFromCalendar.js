@@ -1,20 +1,19 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import { customizeText, deviceInfo, globalStyles } from "../../styles/styles";
 import React, { useState } from "react";
-import CalendarRender from "../selectFromCalendar/CalendarRender";
+import CalendarRender from "./selectFromCalendar/CalendarRender";
 
-const SelectFromCalendar = () => {
+const SelectFromCalendar = ({ dateValue, onSelectDate }) => {
   const [showCalendar, setShowCalendar] = useState(false);
-  const [selectedDate, setSelectedDate] = useState({
-    DD: "",
-    MM: "",
-    YYYY: "",
-  });
 
   function selectedDay() {
-    if (selectedDate.DD === "") return null;
-    else return `${selectedDate?.DD}/${selectedDate?.MM}/${selectedDate?.YYYY}`;
+    if (dateValue.DD === "") return null;
+    else return `${dateValue?.DD}/${dateValue?.MM}/${dateValue?.YYYY}`;
   }
+
+  const handleChangeDate = (selectedDate) => {
+    onSelectDate("dateSpend", selectedDate);
+  };
 
   return (
     <React.Fragment>
@@ -22,7 +21,7 @@ const SelectFromCalendar = () => {
         onPress={() => setShowCalendar(!showCalendar)}
         style={{ ...globalStyles.input, width: "45%" }}
       >
-        <Text style={customizeText(16, "M", "TG", "left")}>
+        <Text style={customizeText(16, "M", "TG", "center")}>
           {selectedDay() ?? "¿Cúando pasó?"}
         </Text>
       </TouchableOpacity>
@@ -30,7 +29,7 @@ const SelectFromCalendar = () => {
       <CalendarRender
         show={showCalendar}
         changeShow={setShowCalendar}
-        setSelectedDate={setSelectedDate}
+        setSelectedDate={handleChangeDate}
       />
     </React.Fragment>
   );
