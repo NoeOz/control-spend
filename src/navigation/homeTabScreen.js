@@ -43,7 +43,7 @@ export function HomeTabScreen() {
           ),
         }}
       />
-      <HomeTab.Screen
+      {/* <HomeTab.Screen
         name="Saving"
         component={Saving}
         options={{
@@ -52,7 +52,7 @@ export function HomeTabScreen() {
             <ButtonnTab focused={focused} name={"fact-check"} />
           ),
         }}
-      />
+      /> */}
       <HomeTab.Screen
         name="ManageSpend"
         component={ManageSpend}

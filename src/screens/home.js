@@ -51,7 +51,7 @@ const Hello = ({ navigation }) => {
       >{`${dayMemento()}`}</Text>
       <Text
         style={customizeText(30, "M", "S", "left")}
-      >{`${"Noe Oziel"}`}</Text>
+      >{`${"Usuario"}`}</Text>
     </ImageBackground>
   );
 };

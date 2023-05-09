@@ -11,7 +11,7 @@ const SpendsMonth = () => {
       }}
     >
       <Text style={customizeText(18, "M", "S")}>Gastos de este mes</Text>
-      <Text style={customizeText(44, "M", "S")}>$64.01</Text>
+      <Text style={customizeText(44, "M", "S")}>$00.00</Text>
     </View>
   );
 };

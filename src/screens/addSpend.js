@@ -1,8 +1,14 @@
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { colors, customizeText, globalStyles } from "../styles/styles";
 import SelectTypeSpend from "../components/formAdd/SelectTypeSpend";
 import SelectFromCalendar from "../components/formAdd/SelectFromCalendar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Feather } from "@expo/vector-icons";
 
 const initialFormAddValues = {
@@ -16,6 +22,12 @@ const initialFormAddValues = {
 const AddSpend = () => {
   const [formAddSpend, setFormAddSpend] = useState(initialFormAddValues);
 
+  useEffect(() => {
+    return () => {
+      setFormAddSpend(initialFormAddValues);
+    };
+  }, []);
+
   /**
    * The function changes the value of a specific key in an object and updates the state of a form.
    * @param key - The key is a string representing the name of a property in an object. In this case,
@@ -27,9 +39,20 @@ const AddSpend = () => {
     setFormAddSpend({ ...formAddSpend, [key]: value });
   }
 
-  function validateForm(key) {
+  function validateValueForm(key) {
     if (formAddSpend[key] !== initialFormAddValues[key]) return true;
     else return false;
+  }
+
+  function validateForm() {
+    const arrayKeysForm = Object.keys(formAddSpend);
+    let validatedElements = new Array();
+    arrayKeysForm.forEach((keyForm) => {
+      validatedElements.push(validateValueForm(keyForm));
+    });
+
+    const validation = validatedElements.every((valid) => valid === true);
+    return validation;
   }
 
   return (
@@ -41,24 +64,16 @@ const AddSpend = () => {
     >
       <View
         style={{
-          flexDirection: "row",
+          ...globalStyles.rowSpaceBetw,
           alignContent: "center",
-          justifyContent: "space-between",
         }}
       >
         <Text style={customizeText(24, "M", "N", "left")}>Agrega un gasto</Text>
-        <TouchableOpacity
-          style={{
-            padding: "2%",
-            width: "12%",
-            alignSelf: "center",
-            alignItems: "center",
-            borderRadius: 15,
-            backgroundColor: colors.lavander,
-          }}
-        >
-          <Feather name="plus" size={25} color={colors.grape} />
-        </TouchableOpacity>
+        {validateForm() && (
+          <TouchableOpacity style={styles.buttonAdd}>
+            <Feather name="plus" size={25} color={colors.grape} />
+          </TouchableOpacity>
+        )}
       </View>
       <View style={{ marginVertical: 15 }}>
         <TextInput
@@ -68,11 +83,11 @@ const AddSpend = () => {
         />
         <TextInput
           multiline
-          placeholder="Descripción (opcional)"
+          placeholder="Descripción"
           style={globalStyles.input}
           onChangeText={(value) => changeSpendValues("description", value)}
         />
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <View style={globalStyles.rowSpaceBetw}>
           <TextInput
             placeholder="Monto"
             style={{ ...globalStyles.input, width: "45%" }}
@@ -92,5 +107,16 @@ const AddSpend = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  buttonAdd: {
+    padding: "2%",
+    width: "12%",
+    alignSelf: "center",
+    alignItems: "center",
+    borderRadius: 15,
+    backgroundColor: colors.lavander,
+  },
+});
 
 export default AddSpend;
