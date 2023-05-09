@@ -2,12 +2,14 @@ import { ImageBackground, StyleSheet, Text, View } from "react-native";
 import { colors, customizeText, globalStyles } from "../styles/styles";
 import AnimatedFig from "../components/home/AnimatedFigs";
 import { firstTime, welcomeMessage } from "../constants/welcome";
+import { useEffect } from "react";
 
 const Wellcome = () => (
   <View style={styles.containerFirstTime}>
     <Text
-      style={customizeText(40, "M", "S", "left", {
+      style={customizeText(35, "M", "S", "left", {
         width: "65%",
+        marginBottom: 5,
       })}
     >{`${firstTime.title[0]}`}</Text>
     <Text
@@ -16,7 +18,14 @@ const Wellcome = () => (
   </View>
 );
 
-const Hello = () => {
+const Hello = ({ navigation }) => {
+  useEffect(() => {
+    setTimeout(() => {
+      navigation.navigate("HomeTabScreen");
+    }, 2100);
+    return () => {};
+  }, []);
+
   function dayMemento() {
     var fecha = new Date();
     var hora = fecha.getHours();
@@ -36,16 +45,18 @@ const Hello = () => {
   return (
     <ImageBackground style={styles.containerFirstTime} blurRadius={10}>
       <Text
-        style={customizeText(30,"M", "S", "left", {
+        style={customizeText(20, "M", "S", "left", {
           width: "65%",
         })}
       >{`${dayMemento()}`}</Text>
-      <Text style={customizeText(48,"M", "S", "left")}>{`${"Noe Oziel"}`}</Text>
+      <Text
+        style={customizeText(30, "M", "S", "left")}
+      >{`${"Noe Oziel"}`}</Text>
     </ImageBackground>
   );
 };
 
-const Home = () => {
+const Home = ({ navigation }) => {
   return (
     <View
       style={{
@@ -54,7 +65,7 @@ const Home = () => {
       }}
     >
       <AnimatedFig />
-      <Hello />
+      <Hello navigation={navigation} />
     </View>
   );
 };

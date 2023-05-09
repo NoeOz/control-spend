@@ -35,7 +35,7 @@ export default function App() {
       <View onLayout={onLayoutRootView} />
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="HomeTabScreen"
+          initialRouteName="Home"
           screenOptions={styleStack}
         >
           <Stack.Screen name="Home" component={Home} options={nonDisplayTab} />

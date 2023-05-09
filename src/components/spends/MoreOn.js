@@ -3,10 +3,10 @@ import { colors, customizeText, deviceInfo, globalStyles } from "../../styles/st
 
 const MoreOn = () => {
   const concurrentSpend = [
-    { id: "h1", name: "hbo", coust: "120" },
-    { id: "n1", name: "netflix", coust: "300" },
-    { id: "m1", name: "mubi", coust: "84" },
-    { id: "s1", name: "spotify", coust: "100" },
+    { id: "h1", name: "hbo", mount: "120" },
+    { id: "n1", name: "netflix", mount: "300" },
+    { id: "m1", name: "mubi", mount: "84" },
+    { id: "s1", name: "spotify", mount: "100" },
   ];
 
   const Item = ({ item }) => (
@@ -28,7 +28,7 @@ const MoreOn = () => {
       >
         {item.name}
       </Text>
-      <Text style={customizeText(24, "M", "B")}>{`$${item.coust}`}</Text>
+      <Text style={customizeText(24, "M", "B")}>{`$${item.mount}`}</Text>
     </View>
   );
   return (

@@ -103,5 +103,6 @@ export const globalStyles = StyleSheet.create({
     height: 1.5,
     backgroundColor: colors.gray_1,
     marginVertical: 15,
-  }
+  },
+  rowSpaceBetw: { flexDirection: "row", justifyContent: "space-between" },
 });
