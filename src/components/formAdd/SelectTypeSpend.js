@@ -4,10 +4,7 @@ import { customizeText, globalStyles } from "../../styles/styles";
 const SelectTypeSpend = ({ selectedType, onSelectType }) => {
   const typeSpend = [
     "Fijo",
-    "Suscripción",
-    "Espontaneo",
-    "Emergencia",
-    "Ocio",
+    "Espontáneo",
     "Entretenimiento",
     "Inversión",
     "Personales",

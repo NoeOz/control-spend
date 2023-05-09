@@ -1,8 +1,11 @@
 import { FlatList, Text, View } from "react-native";
 import { colors, customizeText, globalStyles } from "../styles/styles";
 import ItemCardSpend from "../components/manageSpends/ItemCardSpend";
+import { useState } from "react";
+import SelectedSpend from "../components/manageSpends/SelectedSpend";
 
 const ManageSpend = () => {
+  const [selectedSpend, setSelectedSpend] = useState(null);
   const concurrentSpend = [
     [
       { id: "h1", name: "hbo", mount: "120", typeSpend: "Suscripción" },
@@ -15,7 +18,7 @@ const ManageSpend = () => {
       { id: "cf", name: "doritos", mount: "20", typeSpend: "Otro" },
       { id: "fg", name: "celular", mount: "5000", typeSpend: "Personales" },
       { id: "lp", name: "mouse", mount: "1500", typeSpend: "Personales" },
-    ]
+    ],
   ];
 
   return (
@@ -23,13 +26,21 @@ const ManageSpend = () => {
       <Text style={customizeText(24, "M", "N", "left")}>
         Administrar gastos
       </Text>
-      <View style={{...globalStyles.line, backgroundColor: colors.backgroundS}} />
-      <Text style={customizeText(18, "M", "N", "left")}>Suscripciones</Text>
+      <View
+        style={{ ...globalStyles.line, backgroundColor: colors.backgroundS }}
+      />
+      <Text style={customizeText(18, "M", "N", "left")}>Gastos fijos</Text>
       <FlatList
         data={concurrentSpend[0]}
         horizontal
         showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => <ItemCardSpend item={item} type={"card"} />}
+        renderItem={({ item }) => (
+          <ItemCardSpend
+            item={item}
+            type={"card"}
+            onSelect={setSelectedSpend}
+          />
+        )}
         keyExtractor={(item) => item.id}
         style={{ marginVertical: 15 }}
       />
@@ -37,9 +48,19 @@ const ManageSpend = () => {
       <FlatList
         data={concurrentSpend[1]}
         showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => <ItemCardSpend item={item} type={"large"} />}
+        renderItem={({ item }) => (
+          <ItemCardSpend
+            item={item}
+            type={"large"}
+            onSelect={setSelectedSpend}
+          />
+        )}
         keyExtractor={(item) => item.id}
         style={{ marginVertical: 15 }}
+      />
+      <SelectedSpend
+        selectedSpend={selectedSpend}
+        setSelectedSpend={setSelectedSpend}
       />
     </View>
   );
