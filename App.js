@@ -7,6 +7,8 @@ import Home from "./src/screens/home";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import React, { useCallback } from "react";
+import { store } from "./src/redux/store";
+import { Provider } from "react-redux";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -19,25 +21,20 @@ export default function App() {
     "Roboto-Medium": require("./src/assets/fonts/Roboto-Medium.ttf"),
     "Roboto-Bold": require("./src/assets/fonts/Roboto-Bold.ttf"),
   });
-
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
       await SplashScreen.hideAsync();
     }
   }, [fontsLoaded]);
-
   if (!fontsLoaded) {
     return null;
   }
 
   return (
-    <React.Fragment>
+    <Provider store={store}>
       <View onLayout={onLayoutRootView} />
       <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="Home"
-          screenOptions={styleStack}
-        >
+        <Stack.Navigator initialRouteName="Home" screenOptions={styleStack}>
           <Stack.Screen name="Home" component={Home} options={nonDisplayTab} />
           <Stack.Screen
             name="HomeTabScreen"
@@ -46,6 +43,6 @@ export default function App() {
           />
         </Stack.Navigator>
       </NavigationContainer>
-    </React.Fragment>
+    </Provider>
   );
 }

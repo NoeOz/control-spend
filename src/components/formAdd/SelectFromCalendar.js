@@ -1,5 +1,5 @@
-import { Text, TouchableOpacity, View } from "react-native";
-import { customizeText, deviceInfo, globalStyles } from "../../styles/styles";
+import { Text, TouchableOpacity } from "react-native";
+import { customizeText, globalStyles } from "../../styles/styles";
 import React, { useState } from "react";
 import CalendarRender from "./selectFromCalendar/CalendarRender";
 

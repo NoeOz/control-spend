@@ -10,49 +10,39 @@ import SelectTypeSpend from "../components/formAdd/SelectTypeSpend";
 import SelectFromCalendar from "../components/formAdd/SelectFromCalendar";
 import { useEffect, useState } from "react";
 import { Feather } from "@expo/vector-icons";
-
-const initialFormAddValues = {
-  name: "",
-  description: "",
-  mount: "",
-  dateSpend: { DD: "", MM: "", YYYY: "" },
-  typeSpend: "",
-};
+import useAddSpend from "../hooks/createSpend/useAddSpend";
+import { CustomAlert, useStateAlert } from "../components/modals/CustomAlert";
 
 const AddSpend = () => {
-  const [formAddSpend, setFormAddSpend] = useState(initialFormAddValues);
+  const {
+    createSpend,
+    initialFormAddValues,
+    formAddSpend,
+    setFormAddSpend,
+    changeSpendValues,
+    validateForm,
+  } = useAddSpend();
+  const manageAlert = useStateAlert();
 
-  useEffect(() => {
-    return () => {
+  async function handleCreateSpend() {
+    let dataSpend = formAddSpend;
+    dataSpend.dateSpend = `${formAddSpend?.dateSpend?.DD}/${formAddSpend?.dateSpend?.MM}/${formAddSpend?.dateSpend?.YYYY}`;
+    const response = await createSpend(
+      dataSpend.name,
+      dataSpend.description,
+      dataSpend.mount,
+      dataSpend.dateSpend,
+      dataSpend.typeSpend
+    );
+    if (response) {
+      manageAlert.setTitleAlert("Agregar gasto");
+      manageAlert.setMessageAlert("Se ha guardado la información :D");
+      manageAlert.setVisibleAlert(true);
+      setTimeout(() => {
+        manageAlert.clearStates();
+      }, 2500);
       setFormAddSpend(initialFormAddValues);
-    };
-  }, []);
-
-  /**
-   * The function changes the value of a specific key in an object and updates the state of a form.
-   * @param key - The key is a string representing the name of a property in an object. In this case,
-   * it is used to specify which property in the `formAddSpend` object should be updated with the new
-   * `value`.
-   * @param value - The value that will be assigned to the specified key in the formAddSpend object.
-   */
-  function changeSpendValues(key, value) {
-    setFormAddSpend({ ...formAddSpend, [key]: value });
-  }
-
-  function validateValueForm(key) {
-    if (formAddSpend[key] !== initialFormAddValues[key]) return true;
-    else return false;
-  }
-
-  function validateForm() {
-    const arrayKeysForm = Object.keys(formAddSpend);
-    let validatedElements = new Array();
-    arrayKeysForm.forEach((keyForm) => {
-      validatedElements.push(validateValueForm(keyForm));
-    });
-
-    const validation = validatedElements.every((valid) => valid === true);
-    return validation;
+    }
   }
 
   return (
@@ -62,6 +52,10 @@ const AddSpend = () => {
         backgroundColor: colors.backgroundS,
       }}
     >
+      <CustomAlert
+        {...manageAlert}
+        changeVisibility={(value) => manageAlert.setVisibleAlert(value)}
+      />
       <View
         style={{
           ...globalStyles.rowSpaceBetw,
@@ -70,7 +64,10 @@ const AddSpend = () => {
       >
         <Text style={customizeText(24, "M", "N", "left")}>Agrega un gasto</Text>
         {validateForm() && (
-          <TouchableOpacity style={styles.buttonAdd}>
+          <TouchableOpacity
+            onPress={() => handleCreateSpend()}
+            style={styles.buttonAdd}
+          >
             <Feather name="plus" size={25} color={colors.grape} />
           </TouchableOpacity>
         )}
@@ -80,12 +77,14 @@ const AddSpend = () => {
           placeholder="¿En qué gastaste?"
           style={globalStyles.input}
           onChangeText={(value) => changeSpendValues("name", value)}
+          value={formAddSpend.name}
         />
         <TextInput
           multiline
           placeholder="Descripción"
           style={globalStyles.input}
           onChangeText={(value) => changeSpendValues("description", value)}
+          value={formAddSpend.description}
         />
         <View style={globalStyles.rowSpaceBetw}>
           <TextInput
@@ -93,6 +92,7 @@ const AddSpend = () => {
             style={{ ...globalStyles.input, width: "45%" }}
             keyboardType="decimal-pad"
             onChangeText={(value) => changeSpendValues("mount", value)}
+            value={formAddSpend.mount}
           />
           <SelectFromCalendar
             dateValue={formAddSpend.dateSpend}

@@ -3,6 +3,7 @@ import { colors, customizeText, globalStyles } from "../styles/styles";
 import AnimatedFig from "../components/home/AnimatedFigs";
 import { firstTime, welcomeMessage } from "../constants/welcome";
 import { useEffect } from "react";
+import useInitial from "../hooks/useInitial";
 
 const Wellcome = () => (
   <View style={styles.containerFirstTime}>
@@ -57,6 +58,13 @@ const Hello = ({ navigation }) => {
 };
 
 const Home = ({ navigation }) => {
+  const { recoverDataSpends } = useInitial();
+
+  useEffect(() => {
+    recoverDataSpends();
+    return () => {};
+  }, []);
+
   return (
     <View
       style={{
