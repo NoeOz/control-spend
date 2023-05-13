@@ -8,10 +8,10 @@ import {
 import { colors, customizeText, globalStyles } from "../styles/styles";
 import SelectTypeSpend from "../components/formAdd/SelectTypeSpend";
 import SelectFromCalendar from "../components/formAdd/SelectFromCalendar";
-import { useEffect, useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import useAddSpend from "../hooks/createSpend/useAddSpend";
 import { CustomAlert, useStateAlert } from "../components/modals/CustomAlert";
+import TipsInput from "../components/formAdd/TipsInput";
 
 const AddSpend = () => {
   const {
@@ -35,12 +35,14 @@ const AddSpend = () => {
       dataSpend.typeSpend
     );
     if (response) {
-      manageAlert.setTitleAlert("Agregar gasto");
-      manageAlert.setMessageAlert("Se ha guardado la información :D");
+      manageAlert.setTitleAlert("Información guardada");
+      manageAlert.setMessageAlert(
+        "La información se ha guardado correctamente"
+      );
       manageAlert.setVisibleAlert(true);
       setTimeout(() => {
         manageAlert.clearStates();
-      }, 2500);
+      }, 2000);
       setFormAddSpend(initialFormAddValues);
     }
   }
@@ -79,6 +81,7 @@ const AddSpend = () => {
           onChangeText={(value) => changeSpendValues("name", value)}
           value={formAddSpend.name}
         />
+        <TipsInput typeInput={"name"} value={formAddSpend.name} />
         <TextInput
           multiline
           placeholder="Descripción"
@@ -86,12 +89,13 @@ const AddSpend = () => {
           onChangeText={(value) => changeSpendValues("description", value)}
           value={formAddSpend.description}
         />
+        <TipsInput typeInput={"description"} value={formAddSpend.description} />
         <View style={globalStyles.rowSpaceBetw}>
           <TextInput
             placeholder="Monto"
             style={{ ...globalStyles.input, width: "45%" }}
             keyboardType="decimal-pad"
-            onChangeText={(value) => changeSpendValues("mount", value)}
+            onChangeText={(value) => changeSpendValues("mount", value.trim())}
             value={formAddSpend.mount}
           />
           <SelectFromCalendar

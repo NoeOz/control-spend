@@ -1,25 +1,23 @@
-import { FlatList, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { colors, customizeText, globalStyles } from "../styles/styles";
-import ItemCardSpend from "../components/manageSpends/ItemCardSpend";
-import { useState } from "react";
-import SelectedSpend from "../components/manageSpends/SelectedSpend";
+import {
+  SelectedSpend,
+  StateSelectedSpend,
+} from "../components/manageSpends/selectSpend/SelectedSpend";
+import useManageSpend from "../hooks/manageSpends/useManageSpend";
+import Subs from "../components/manageSpends/options/Subs";
+import OtherSpends from "../components/manageSpends/options/OtherSpends";
+import { useIsFocused } from "@react-navigation/native";
+import { useEffect } from "react";
 
 const ManageSpend = () => {
-  const [selectedSpend, setSelectedSpend] = useState(null);
-  const concurrentSpend = [
-    [
-      { id: "h1", name: "hbo", mount: "120", typeSpend: "Suscripción" },
-      { id: "n1", name: "netflix", mount: "300", typeSpend: "Suscripción" },
-      { id: "m1", name: "mubi", mount: "84", typeSpend: "Suscripción" },
-      { id: "s1", name: "spotify", mount: "100", typeSpend: "Suscripción" },
-    ],
-    [
-      { id: "a2", name: "papas fritas", mount: "35", typeSpend: "Espontaneo" },
-      { id: "cf", name: "doritos", mount: "20", typeSpend: "Otro" },
-      { id: "fg", name: "celular", mount: "5000", typeSpend: "Personales" },
-      { id: "lp", name: "mouse", mount: "1500", typeSpend: "Personales" },
-    ],
-  ];
+  const manageSelectedSpend = StateSelectedSpend();
+  const focusScreen = useIsFocused();
+  const { currentSubs, thisMonthSpends } = useManageSpend({ focusScreen });
+
+  useEffect(() => {
+    return () => {};
+  }, [focusScreen]);
 
   return (
     <View style={globalStyles.principalContainer}>
@@ -29,39 +27,15 @@ const ManageSpend = () => {
       <View
         style={{ ...globalStyles.line, backgroundColor: colors.backgroundS }}
       />
-      <Text style={customizeText(18, "M", "N", "left")}>Gastos fijos</Text>
-      <FlatList
-        data={concurrentSpend[0]}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <ItemCardSpend
-            item={item}
-            type={"card"}
-            onSelect={setSelectedSpend}
-          />
-        )}
-        keyExtractor={(item) => item.id}
-        style={{ marginVertical: 15 }}
+      <Subs
+        currentSubs={currentSubs}
+        setSelectedSpend={manageSelectedSpend.setSelectedSpend}
       />
-      <Text style={customizeText(18, "M", "N", "left")}>Otros</Text>
-      <FlatList
-        data={concurrentSpend[1]}
-        showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <ItemCardSpend
-            item={item}
-            type={"large"}
-            onSelect={setSelectedSpend}
-          />
-        )}
-        keyExtractor={(item) => item.id}
-        style={{ marginVertical: 15 }}
+      <OtherSpends
+        thisMonthSpends={thisMonthSpends}
+        setSelectedSpend={manageSelectedSpend.setSelectedSpend}
       />
-      <SelectedSpend
-        selectedSpend={selectedSpend}
-        setSelectedSpend={setSelectedSpend}
-      />
+      <SelectedSpend {...manageSelectedSpend} />
     </View>
   );
 };

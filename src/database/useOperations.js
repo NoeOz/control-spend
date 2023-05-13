@@ -79,15 +79,7 @@ const useOperations = () => {
    * @returns can return true || error || null
    */
   function deleteSpend(id) {
-    let result = null;
-    db.transaction((tx) => {
-      tx.executeSql(sqlSentences.delete, [id], (txObj, resultSet) => {
-        if (resultSet.rowsAffected > 0) {
-          result = true;
-        }
-      });
-    });
-    return result;
+    return executeSqlPromise(sqlSentences.delete, [id]);
   }
 
   return { getSpends, pushSpend, updateSpend, deleteSpend };

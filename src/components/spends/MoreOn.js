@@ -1,29 +1,23 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import {
   colors,
   customizeText,
   deviceInfo,
   globalStyles,
 } from "../../styles/styles";
-import { useEffect, useState } from "react";
-import useGraphics from "../../hooks/graphics/useGraphics";
 
-const MoreOn = () => {
-  const [concurrentSpend, setConcurrentSpend] = useState([]);
-  const { getMoreOnSpends } = useGraphics();
-
-  useEffect(() => {
-    handleGetMoreOnSpends();
-    return () => {};
-  }, []);
-
-  function handleGetMoreOnSpends() {
-    const spendsMoreOn = getMoreOnSpends();
-    setConcurrentSpend(spendsMoreOn.splice(0, 4));
-  }
-
+const MoreOn = ({ concurrentSpend, setSelectedSpend }) => {
   const Item = ({ item }) => (
-    <View style={styles.itemStyle}>
+    <TouchableOpacity
+      onPress={() => setSelectedSpend(item)}
+      style={styles.itemStyle}
+    >
       <Text
         style={customizeText(18, "L", "B", "left", {
           textTransform: "capitalize",
@@ -32,7 +26,7 @@ const MoreOn = () => {
         {item.name}
       </Text>
       <Text style={customizeText(24, "M", "B")}>${item.mount}</Text>
-    </View>
+    </TouchableOpacity>
   );
 
   return (

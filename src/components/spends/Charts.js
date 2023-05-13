@@ -1,9 +1,9 @@
 import { Text, TouchableOpacity, View } from "react-native";
-import { customizeText } from "../../styles/styles";
+import { colors, customizeText, globalStyles } from "../../styles/styles";
 
 const Charts = () => {
   return (
-    <View>
+    <View style={{ ...globalStyles.card, backgroundColor: colors.snow }}>
       <View
         style={{
           flexDirection: "row",

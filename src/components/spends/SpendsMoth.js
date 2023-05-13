@@ -1,22 +1,7 @@
 import { Text, View } from "react-native";
 import { colors, customizeText, globalStyles } from "../../styles/styles";
-import { useEffect, useState } from "react";
-import useGraphics from "../../hooks/graphics/useGraphics";
 
-const SpendsMonth = () => {
-  const [monthSpend, setMonthSpend] = useState(0);
-  const { getThisMonthSpends } = useGraphics();
-
-  useEffect(() => {
-    handleGetSpend();
-    return () => {};
-  }, []);
-
-  function handleGetSpend() {
-    const resMonthSp = getThisMonthSpends();
-    setMonthSpend(resMonthSp.toFixed(2));
-  }
-
+const SpendsMonth = ({monthSpend}) => {
   const ThisMonthSpends = () => (
     <View
       style={{

@@ -51,13 +51,13 @@ export const CustomAlert = (props) => {
               style={styles.btnClose}
               onPress={() => changeVisibility(false)}
             >
-              <Feather name={"x"} size={30} color={colors.noir} />
+              <Feather name={"x"} size={25} color={colors.noir} />
             </TouchableOpacity>
           )}
-          <Text style={[customizeText(20, "M", "G"), styles.modalTextAlign]}>
+          <Text style={[customizeText(18, "M", "G"), styles.modalTextAlign]}>
             {`${titleAlert}`}
           </Text>
-          <Text style={[customizeText(20, "M", "N"), styles.modalTextAlign]}>
+          <Text style={[customizeText(16, "M", "N"), styles.modalTextAlign]}>
             {`${messageAlert}`}
           </Text>
         </View>

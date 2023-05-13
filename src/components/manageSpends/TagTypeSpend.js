@@ -13,9 +13,7 @@ const TagTypeSpend = ({ typeSpend }) => {
   const colorsTypeSpend = [
     { text: "Fijo", color: colors.taupe_gray },
     { text: "Suscripción", color: null },
-    { text: "Espontaneo", color: colors.tea_green },
-    { text: "Emergencia", color: colors.cactus_1 },
-    { text: "Ocio", color: colors.cactus_2 },
+    { text: "Espontáneo", color: colors.tea_green },
     { text: "Entretenimiento", color: colors.orange },
     { text: "Inversión", color: colors.peach },
     { text: "Personales", color: colors.lavander },

@@ -59,7 +59,7 @@ export function HomeTabScreen() {
         options={{
           title: "",
           tabBarIcon: ({ focused }) => (
-            <ButtonnTab focused={focused} name={"credit-card"} />
+            <ButtonnTab focused={focused} name={"list-alt"} />
           ),
         }}
       />

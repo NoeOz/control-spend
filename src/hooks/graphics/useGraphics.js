@@ -1,10 +1,27 @@
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-const useGraphics = () => {
+const useGraphics = ({ focusScreen }) => {
   const globalState = useSelector((state) => state.globalState);
   //today date
   const d = new Date();
   const month = d.getMonth() + 1;
+
+  const [monthSpend, setMonthSpend] = useState(0);
+  const [concurrentSpend, setConcurrentSpend] = useState([]);
+
+  useEffect(() => {
+    getThisMonthSpends();
+    getMoreOnSpends();
+    return () => {
+      clearStates();
+    };
+  }, [focusScreen]);
+
+  function clearStates() {
+    setMonthSpend(0);
+    setConcurrentSpend([]);
+  }
 
   function getThisMonthSpends() {
     const globalSpends = globalState.spends;
@@ -20,9 +37,8 @@ const useGraphics = () => {
           }
         }
       });
+      setMonthSpend(thisMonthSpend.toFixed(2));
     }
-
-    return thisMonthSpend;
   }
 
   function getMoreOnSpends() {
@@ -33,17 +49,18 @@ const useGraphics = () => {
       globalSpends.forEach((spend) => {
         if (!!spend?.dateSpend && !!spend?.mount) {
           const fixMonthSpend = parseInt(spend?.dateSpend.split("/")[1]);
-          if (fixMonthSpend <= month && fixMonthSpend >= month - 2)
+          if (fixMonthSpend <= month && fixMonthSpend >= month - 2) {
             spendsLastMonths.push(spend);
+          }
         }
       });
+      spendsLastMonths.sort((a, b) => b?.mount - a?.mount);
+      const final = spendsLastMonths.slice(0, 4);
+      setConcurrentSpend(final);
     }
-
-    spendsLastMonths.sort((a, b) => b?.mount - a?.mount);
-    return spendsLastMonths;
   }
 
-  return { getThisMonthSpends, getMoreOnSpends };
+  return { monthSpend, concurrentSpend };
 };
 
 export default useGraphics;

@@ -3,12 +3,13 @@ import { customizeText, globalStyles } from "../../styles/styles";
 
 const SelectTypeSpend = ({ selectedType, onSelectType }) => {
   const typeSpend = [
-    "Fijo",
     "Espontáneo",
     "Entretenimiento",
     "Inversión",
     "Personales",
+    "Suscripción",
     "Otro",
+    "Fijo",
   ];
 
   function itemSelected(item) {

@@ -8,17 +8,22 @@ export const StateTraslucentModal = () => {
 };
 
 export const TraslucentModal = (props) => {
-  const { children, visible, setVisible, altStyle } = props;
+  const { children, visible, setVisible, managerClose, altStyle } = props;
+
+  function manageClose() {
+    managerClose();
+    setVisible(!visible);
+  }
 
   return (
     <Modal
       transparent
       visible={visible}
       animationType="fade"
-      onRequestClose={() => setVisible(!visible)}
+      onRequestClose={() => manageClose()}
     >
       <Pressable
-        onPress={() => setVisible(!visible)}
+        onPress={() => manageClose()}
         style={{
           ...altStyle,
           flex: 1,

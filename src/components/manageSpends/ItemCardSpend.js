@@ -8,7 +8,6 @@ import {
 import TagTypeSpend from "./TagTypeSpend";
 
 const ItemCardSpend = ({ item, type, onSelect }) => {
-
   function assignStyle() {
     if (type === "card") return styles.container;
     else return styles.containerLarge;
@@ -27,12 +26,12 @@ const ItemCardSpend = ({ item, type, onSelect }) => {
           textTransform: "capitalize",
         })}
       >
-        {`${item.name}`}
+        {`${item?.name}`}
       </Text>
-      <TagTypeSpend typeSpend={item.typeSpend} />
+      <TagTypeSpend typeSpend={item?.typeSpend} />
       <Text
         style={customizeText(18, "M", "N", "center")}
-      >{`$${item.mount}`}</Text>
+      >{`$${item?.mount}`}</Text>
     </TouchableOpacity>
   );
 };
