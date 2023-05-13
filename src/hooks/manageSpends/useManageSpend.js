@@ -18,7 +18,7 @@ const useManageSpend = ({ focusScreen }) => {
     return () => {
       cleanStates();
     };
-  }, [focusScreen, globalState]);
+  }, [focusScreen]);
 
   function cleanStates() {
     setCurrentSubs([]);
