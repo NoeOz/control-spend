@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import {
   colors,
   customizeText,
@@ -7,7 +7,7 @@ import {
 } from "../../styles/styles";
 import TagTypeSpend from "./TagTypeSpend";
 
-const ItemCardSpend = ({ item, type, onSelect }) => {
+const ItemCardSpend = ({ item, type, onSelect, showTypeTag = true }) => {
   function assignStyle() {
     if (type === "card") return styles.container;
     else return styles.containerLarge;
@@ -24,14 +24,18 @@ const ItemCardSpend = ({ item, type, onSelect }) => {
       <Text
         style={customizeText(16, "L", "N", "center", {
           textTransform: "capitalize",
+          width: "28%",
         })}
+        numberOfLines={1}
       >
         {`${item?.name}`}
       </Text>
-      <TagTypeSpend typeSpend={item?.typeSpend} />
+
       <Text
-        style={customizeText(18, "M", "N", "center")}
+        style={customizeText(18, "M", "N", "center", { width: "28%" })}
+        numberOfLines={1}
       >{`$${item?.mount}`}</Text>
+      {showTypeTag && <TagTypeSpend typeSpend={item?.typeSpend} />}
     </TouchableOpacity>
   );
 };

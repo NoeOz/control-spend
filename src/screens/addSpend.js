@@ -97,6 +97,7 @@ const AddSpend = () => {
             keyboardType="decimal-pad"
             onChangeText={(value) => changeSpendValues("mount", value.trim())}
             value={formAddSpend.mount}
+            textAlign="center"
           />
           <SelectFromCalendar
             dateValue={formAddSpend.dateSpend}

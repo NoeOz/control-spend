@@ -8,16 +8,34 @@ import useManageSpend from "../hooks/manageSpends/useManageSpend";
 import Subs from "../components/manageSpends/options/Subs";
 import OtherSpends from "../components/manageSpends/options/OtherSpends";
 import { useIsFocused } from "@react-navigation/native";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const ManageSpend = () => {
   const manageSelectedSpend = StateSelectedSpend();
   const focusScreen = useIsFocused();
-  const { currentSubs, thisMonthSpends } = useManageSpend({ focusScreen });
+  // Spends states
+  const [currentSubs, setCurrentSubs] = useState([]);
+  const [thisMonthSpends, setThisMonthSpends] = useState([]);
+  // trigger to recharge
+  const [recharge, setRecharge] = useState(false);
+
+  const { getThisMonthSubs, handleGetSpendsThisMonth } = useManageSpend();
 
   useEffect(() => {
+    getValues();
     return () => {};
-  }, [focusScreen]);
+  }, [focusScreen, recharge]);
+
+  function getValues() {
+    const subs = getThisMonthSubs();
+    const allMonth = handleGetSpendsThisMonth();
+    setCurrentSubs(subs);
+    setThisMonthSpends(allMonth);
+  }
+
+  function activateTrigger() {
+    setRecharge(!recharge);
+  }
 
   return (
     <View style={globalStyles.principalContainer}>
@@ -35,7 +53,7 @@ const ManageSpend = () => {
         thisMonthSpends={thisMonthSpends}
         setSelectedSpend={manageSelectedSpend.setSelectedSpend}
       />
-      <SelectedSpend {...manageSelectedSpend} />
+      <SelectedSpend {...manageSelectedSpend} trigger={activateTrigger} />
     </View>
   );
 };

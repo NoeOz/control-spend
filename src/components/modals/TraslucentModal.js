@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Modal, Pressable } from "react-native";
+import { Modal, Pressable, View } from "react-native";
 
 export const StateTraslucentModal = () => {
   const [visible, setVisible] = useState(false);
@@ -30,9 +30,26 @@ export const TraslucentModal = (props) => {
           padding: "2.5%",
           backgroundColor: "rgba(20,20,20,.9)",
         }}
+      />
+      <View
+        style={{
+          ...altStyle,
+          flex: 1,
+          padding: "2.5%",
+          backgroundColor: "rgba(20,20,20,.9)",
+        }}
       >
         {children}
-      </Pressable>
+      </View>
+      <Pressable
+        onPress={() => manageClose()}
+        style={{
+          ...altStyle,
+          flex: 1,
+          padding: "2.5%",
+          backgroundColor: "rgba(20,20,20,.9)",
+        }}
+      />
     </Modal>
   );
 };

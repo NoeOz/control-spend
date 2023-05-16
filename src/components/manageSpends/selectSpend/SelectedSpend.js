@@ -12,15 +12,15 @@ import useSelectedSpend from "../../../hooks/manageSpends/useSelectedSpend";
 export const StateSelectedSpend = () => {
   //watch one spend
   const [selectedSpend, setSelectedSpend] = useState(null);
-
   return { selectedSpend, setSelectedSpend };
 };
 
 export const SelectedSpend = (props) => {
-  const { selectedSpend, setSelectedSpend, actions = true, effect } = props;
+  const { selectedSpend, setSelectedSpend, actions = true, trigger } = props;
   const manageTraslucentModal = StateTraslucentModal();
-  const { dropSpend } = useSelectedSpend();
+  const { dropSpend, editSpend } = useSelectedSpend();
   const [message, setMessage] = useState("");
+  const [enableEdit, setEnableEdit] = useState(false);
 
   useEffect(() => {
     manageSelectedSpend();
@@ -39,6 +39,7 @@ export const SelectedSpend = (props) => {
     const res = await dropSpend(selectedSpend.id);
     if (res) {
       setMessage("Listo, se ha eliminado este elemento");
+      trigger();
       setTimeout(() => {
         setMessage("");
         closeViewSelectedSpend();
@@ -47,7 +48,13 @@ export const SelectedSpend = (props) => {
     }
   }
 
-  async function handleEditSpend() {}
+  async function handleEditSpend() {
+    setEnableEdit(true);
+    //todo: create inputs to edit values and enabled when enableEdit = true
+    //todo: change icon || place icon to save changes
+    //todo: use function db to update item
+    //todo show message and keep open modal
+  }
 
   return (
     <TraslucentModal
@@ -58,14 +65,17 @@ export const SelectedSpend = (props) => {
     >
       <View style={{ ...globalStyles.card, backgroundColor: colors.snow }}>
         {!!message ? (
-          <Text style={customizeText(18, "M", "N", "left")}>{message}</Text>
+          <Text style={customizeText(18, "M", "N", "left", { padding: "5%" })}>
+            {message}
+          </Text>
         ) : (
-          <>
+          <View>
             <View
               style={{
                 ...globalStyles.rowSpaceBetw,
                 marginVertical: 15,
                 alignItems: "center",
+                zIndex: 100,
               }}
             >
               <Text style={customizeText(18, "I", "N")}>
@@ -94,7 +104,7 @@ export const SelectedSpend = (props) => {
                 editAction={handleEditSpend}
               />
             )}
-          </>
+          </View>
         )}
       </View>
     </TraslucentModal>

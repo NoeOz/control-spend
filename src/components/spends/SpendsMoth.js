@@ -1,7 +1,20 @@
 import { Text, View } from "react-native";
 import { colors, customizeText, globalStyles } from "../../styles/styles";
 
-const SpendsMonth = ({monthSpend}) => {
+const SpendsMonth = ({ monthSpend }) => {
+  function formatNumbers(num) {
+    if (isNaN(num)) {
+      return "--.--";
+    }
+    if (num >= 1000000) {
+      return (num / 1000000).toFixed(2) + "M";
+    }
+    if (num >= 1000) {
+      return (num / 1000).toFixed(2) + "K";
+    }
+    return num.toString();
+  }
+
   const ThisMonthSpends = () => (
     <View
       style={{
@@ -11,7 +24,9 @@ const SpendsMonth = ({monthSpend}) => {
       }}
     >
       <Text style={customizeText(18, "M", "S")}>Gastos de este mes</Text>
-      <Text style={customizeText(44, "M", "S")}>${monthSpend}</Text>
+      <Text style={customizeText(44, "M", "S")} numberOfLines={1}>
+        ${formatNumbers(monthSpend)}
+      </Text>
     </View>
   );
 

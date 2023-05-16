@@ -1,10 +1,7 @@
-import { useDispatch, useSelector } from "react-redux";
 import useOperations from "../../database/useOperations";
 import useInitial from "../useInitial";
 
 const useSelectedSpend = () => {
-  /* const globalState = useSelector((state) => state.globalState);
-  const dispatch = useDispatch(); */
   const { deleteSpend } = useOperations();
   const { recoverDataSpends } = useInitial();
 
@@ -12,12 +9,14 @@ const useSelectedSpend = () => {
     const response = await deleteSpend(idSpend);
 
     if (response) {
-      recoverDataSpends();
+      await recoverDataSpends();
       return true;
     } else return false;
   }
 
-  return { dropSpend };
+  async function editSpend(idSpend) {}
+
+  return { dropSpend, editSpend };
 };
 
 export default useSelectedSpend;

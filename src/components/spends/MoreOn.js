@@ -22,10 +22,13 @@ const MoreOn = ({ concurrentSpend, setSelectedSpend }) => {
         style={customizeText(18, "L", "B", "left", {
           textTransform: "capitalize",
         })}
+        numberOfLines={1}
       >
         {item.name}
       </Text>
-      <Text style={customizeText(24, "M", "B")}>${item.mount}</Text>
+      <Text style={customizeText(24, "M", "B")} numberOfLines={1}>
+        ${item.mount}
+      </Text>
     </TouchableOpacity>
   );
 
