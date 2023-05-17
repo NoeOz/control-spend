@@ -14,6 +14,11 @@ const ItemCardSpend = ({ item, type, onSelect, showTypeTag = true }) => {
     else return styles.containerLarge;
   }
 
+  function altStyle() {
+    if (type === "card") return {};
+    else return { width: "28%" };
+  }
+
   return (
     <TouchableOpacity
       onPress={() => onSelect(item)}
@@ -23,21 +28,17 @@ const ItemCardSpend = ({ item, type, onSelect, showTypeTag = true }) => {
       }}
     >
       <Text
-        style={customizeText(18, "L", "N", "left", {
-          width: "28%",
-        })}
+        style={customizeText(18, "L", "N", "left", altStyle())}
         numberOfLines={1}
       >
         {`${item?.name}`}
       </Text>
       <Text
-        style={customizeText(18, "M", "N", "left", {
-          width: "28%",
-        })}
+        style={customizeText(18, "M", "N", "left", altStyle())}
         numberOfLines={1}
       >{`$${formatMK(item?.mount)}`}</Text>
       {showTypeTag && (
-        <View style={{ width: "32%" }}>
+        <View style={{ width: "39%" }}>
           <TagTypeSpend typeSpend={item?.typeSpend} />
         </View>
       )}

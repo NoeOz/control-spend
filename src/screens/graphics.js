@@ -14,7 +14,7 @@ import {
 const Graphics = () => {
   const manageSelectedSpend = StateSelectedSpend();
   const focusScreen = useIsFocused();
-  const { monthSpend, concurrentSpend } = useGraphics({ focusScreen });
+  const { monthSpend, concurrentSpend, spendsByTag } = useGraphics({ focusScreen });
 
   useEffect(() => {
     return () => {};
@@ -32,7 +32,7 @@ const Graphics = () => {
         concurrentSpend={concurrentSpend}
         setSelectedSpend={manageSelectedSpend.setSelectedSpend}
       />
-      <Charts />
+      <Charts dataSpends={spendsByTag} />
       <SelectedSpend {...manageSelectedSpend} actions={false} />
     </View>
   );

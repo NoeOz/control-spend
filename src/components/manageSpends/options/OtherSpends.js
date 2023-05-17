@@ -1,6 +1,6 @@
 import React from "react";
 import { FlatList, Text, View } from "react-native";
-import { colors, customizeText, globalStyles } from "../../../styles/styles";
+import { colors, customizeText, deviceInfo, globalStyles } from "../../../styles/styles";
 import ItemCardSpend from "../ItemCardSpend";
 import { useEffect } from "react";
 
@@ -23,7 +23,7 @@ const OtherSpends = ({ thisMonthSpends = [], setSelectedSpend }) => {
           />
         )}
         keyExtractor={(item) => item.id}
-        style={{ marginVertical: 15 }}
+        style={{ marginVertical: 15, height: deviceInfo.height * 0.6 }}
         ListEmptyComponent={
           <View
             style={{

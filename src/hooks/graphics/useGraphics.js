@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { tagsTypesSpends } from "../../constants/TagsTypeSpends";
 
 const useGraphics = ({ focusScreen }) => {
   const globalState = useSelector((state) => state.globalState);
@@ -9,10 +10,12 @@ const useGraphics = ({ focusScreen }) => {
 
   const [monthSpend, setMonthSpend] = useState(0);
   const [concurrentSpend, setConcurrentSpend] = useState([]);
+  const [spendsByTag, setSpendsByTag] = useState([0, 0, 0, 0, 0, 0, 0]);
 
   useEffect(() => {
     getThisMonthSpends();
     getMoreOnSpends();
+    orderSpendsByTag();
     return () => {
       clearStates();
     };
@@ -21,6 +24,7 @@ const useGraphics = ({ focusScreen }) => {
   function clearStates() {
     setMonthSpend(0);
     setConcurrentSpend([]);
+    setSpendsByTag([]);
   }
 
   function getThisMonthSpends() {
@@ -31,7 +35,9 @@ const useGraphics = ({ focusScreen }) => {
     if (globalSpends?.length > 0) {
       globalSpends.forEach((spend) => {
         if (!!spend?.dateSpend && !!spend?.mount) {
+          //? get the month registered
           const fixMonthSpend = parseInt(spend?.dateSpend.split("/")[1]);
+          //? compare teh month in spend and the actual month
           if (parseInt(fixMonthSpend) === month) {
             thisMonthSpend += spend?.mount;
           }
@@ -60,7 +66,31 @@ const useGraphics = ({ focusScreen }) => {
     }
   }
 
-  return { monthSpend, concurrentSpend };
+  function orderSpendsByTag() {
+    const globalSpends = globalState.spends;
+    //? this is the order in tagsTypesSpends
+    //?Fijo, Suscripción, Espontáneo, Entretenimiento, Inversión, Personales, Otro
+    let newSpendsByTag = [0, 0, 0, 0, 0, 0, 0];
+
+    if (globalSpends?.length > 0) {
+      globalSpends.forEach((spend) => {
+        if (!!spend?.dateSpend && !!spend?.mount) {
+          const fixMonthSpend = parseInt(spend?.dateSpend.split("/")[1]);
+          if (parseInt(fixMonthSpend) === month) {
+            const position = tagsTypesSpends.findIndex(
+              (element) => spend.typeSpend == element.text
+            );
+            newSpendsByTag[position] = parseFloat(
+              newSpendsByTag[position] + spend.mount
+            );
+          }
+        }
+      });
+      setSpendsByTag(newSpendsByTag);
+    }
+  }
+
+  return { monthSpend, concurrentSpend, spendsByTag };
 };
 
 export default useGraphics;
