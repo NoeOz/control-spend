@@ -53,24 +53,14 @@ const useOperations = () => {
 
   /**
    * The function update data spend in "spends" table in a database using SQL.
-   * @param id - id spend
-   * @param dataSpend - an array containing: name, description, mount, dateSpend, typeSpend
+   * @param dataSpend - an array containing: id, name, description, mount, dateSpend, typeSpend
    * @returns can return true || error || null
    */
-  function updateSpend(id, dataSpend) {
-    let result = null;
-    db.transaction((tx) => {
-      tx.executeSql(
-        `UPDATE spends SET name = ${dataSpend.name}, description = ${dataSpend.description}, mount = ${dataSpend.mount}, dateSpend = ${dataSpend.dateSpend}, typeSpend = ${dataSpend.typeSpend} WHERE id = ?`,
-        [id],
-        (txObj, resultSet) => {
-          if (resultSet.rowsAffected > 0) {
-            result = true;
-          }
-        }
-      );
-    });
-    return result;
+  function updateSpend(dataSpend) {
+    return executeSqlPromise(
+      `UPDATE spends SET name = "${dataSpend.name}", description = "${dataSpend.description}", mount = ${dataSpend.mount}, dateSpend = "${dataSpend.dateSpend}", typeSpend = "${dataSpend.typeSpend}" WHERE id = ?`,
+      [dataSpend.id]
+    );
   }
 
   /**

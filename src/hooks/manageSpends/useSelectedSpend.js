@@ -1,8 +1,9 @@
 import useOperations from "../../database/useOperations";
+import { validNumber, validateNonEmptyString } from "../../helpers/validationForm";
 import useInitial from "../useInitial";
 
 const useSelectedSpend = () => {
-  const { deleteSpend } = useOperations();
+  const { deleteSpend, updateSpend } = useOperations();
   const { recoverDataSpends } = useInitial();
 
   async function dropSpend(idSpend) {
@@ -14,9 +15,20 @@ const useSelectedSpend = () => {
     } else return false;
   }
 
-  async function editSpend(idSpend) {}
+  async function editSpend(dataSpend) {
+    const response = await updateSpend(dataSpend);
+    if (response) {
+      await recoverDataSpends();
+      return true;
+    } else return false;
+  }
 
-  return { dropSpend, editSpend };
+  function validateSpend(typeValue, value) {
+    if (typeValue === "num") return validNumber(value);
+    if (typeValue === "str") return validateNonEmptyString(value);
+  }
+
+  return { dropSpend, editSpend, validateSpend };
 };
 
 export default useSelectedSpend;

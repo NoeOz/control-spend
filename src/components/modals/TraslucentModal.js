@@ -22,34 +22,18 @@ export const TraslucentModal = (props) => {
       animationType="fade"
       onRequestClose={() => manageClose()}
     >
-      <Pressable
-        onPress={() => manageClose()}
-        style={{
-          ...altStyle,
-          flex: 1,
-          padding: "2.5%",
-          backgroundColor: "rgba(20,20,20,.9)",
-        }}
-      />
       <View
         style={{
           ...altStyle,
           flex: 1,
-          padding: "2.5%",
           backgroundColor: "rgba(20,20,20,.9)",
+          padding: "2.5%",
         }}
       >
+        <Pressable onPress={() => manageClose()} style={{ flex: 1 }} />
         {children}
+        <Pressable onPress={() => manageClose()} style={{ flex: 1 }} />
       </View>
-      <Pressable
-        onPress={() => manageClose()}
-        style={{
-          ...altStyle,
-          flex: 1,
-          padding: "2.5%",
-          backgroundColor: "rgba(20,20,20,.9)",
-        }}
-      />
     </Modal>
   );
 };

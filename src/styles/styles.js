@@ -19,6 +19,7 @@ export const colors = {
   grape_2: "#443C68",
   gray_1: "#555555",
   gray_2: "#a3a3a3",
+  gray_3: "#EEEEEE",
   taupe_gray: "#909090",
   cool_gray: "#4B576E",
 

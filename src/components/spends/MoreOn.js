@@ -11,6 +11,7 @@ import {
   deviceInfo,
   globalStyles,
 } from "../../styles/styles";
+import { formatMK } from "../../helpers/quantityFormat";
 
 const MoreOn = ({ concurrentSpend, setSelectedSpend }) => {
   const Item = ({ item }) => (
@@ -27,7 +28,7 @@ const MoreOn = ({ concurrentSpend, setSelectedSpend }) => {
         {item.name}
       </Text>
       <Text style={customizeText(24, "M", "B")} numberOfLines={1}>
-        ${item.mount}
+        {`$${formatMK(item.mount)}`}
       </Text>
     </TouchableOpacity>
   );

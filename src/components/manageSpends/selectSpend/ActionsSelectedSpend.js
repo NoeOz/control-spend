@@ -1,32 +1,57 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { colors, customizeText, globalStyles } from "../../../styles/styles";
 import { Feather } from "@expo/vector-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const ActionsSelectedSpend = ({ dropAction, editAction }) => {
+const ActionsSelectedSpend = ({ editSpendEnabled, dropAction, editAction }) => {
   const [beforeDrop, setBeforeDrop] = useState(false);
 
+  useEffect(() => {
+    return () => {};
+  }, [editSpendEnabled]);
+
+  const Options = () => {
+    return editSpendEnabled ? (
+      <View
+        style={{
+          ...globalStyles.rowSpaceBetw,
+          alignSelf: "flex-end",
+          marginTop: 10,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => editAction()}
+          style={{ ...styles.option, marginHorizontal: 0 }}
+        >
+          <Feather name="save" color={colors.snow} size={20} />
+        </TouchableOpacity>
+      </View>
+    ) : (
+      <View
+        style={{
+          ...globalStyles.rowSpaceBetw,
+          alignSelf: "flex-end",
+          marginTop: 10,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => setBeforeDrop(true)}
+          style={styles.option}
+        >
+          <Feather name="trash" color={colors.snow} size={20} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => editAction()}
+          style={{ ...styles.option, marginHorizontal: 0 }}
+        >
+          <Feather name="edit-2" color={colors.snow} size={20} />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return !beforeDrop ? (
-    <View
-      style={{
-        ...globalStyles.rowSpaceBetw,
-        alignSelf: "flex-end",
-        marginTop: 10,
-      }}
-    >
-      <TouchableOpacity
-        onPress={() => setBeforeDrop(true)}
-        style={styles.option}
-      >
-        <Feather name="trash" color={colors.snow} size={20} />
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => editAction()}
-        style={{ ...styles.option, marginHorizontal: 0 }}
-      >
-        <Feather name="edit-2" color={colors.snow} size={20} />
-      </TouchableOpacity>
-    </View>
+    <Options />
   ) : (
     <View style={{ marginTop: 15 }}>
       <Text style={customizeText(18, "I", "G", "center")}>
@@ -37,7 +62,7 @@ const ActionsSelectedSpend = ({ dropAction, editAction }) => {
           ...globalStyles.rowSpaceBetw,
           width: "40%",
           alignSelf: "center",
-          marginVertical: 15
+          marginVertical: 15,
         }}
       >
         <TouchableOpacity onPress={() => setBeforeDrop(false)}>

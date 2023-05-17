@@ -1,18 +1,15 @@
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { colors, customizeText, globalStyles } from "../../styles/styles";
+import { formatMK } from "../../helpers/quantityFormat";
+import { Feather } from "@expo/vector-icons";
+import { useState } from "react";
 
 const SpendsMonth = ({ monthSpend }) => {
-  function formatNumbers(num) {
-    if (isNaN(num)) {
-      return "--.--";
-    }
-    if (num >= 1000000) {
-      return (num / 1000000).toFixed(2) + "M";
-    }
-    if (num >= 1000) {
-      return (num / 1000).toFixed(2) + "K";
-    }
-    return num.toString();
+  const [modeViewSpend, setModeViewSpend] = useState(false);
+
+  function viewMonthSpend() {
+    if (!modeViewSpend) return formatMK(monthSpend);
+    else return `${monthSpend}`;
   }
 
   const ThisMonthSpends = () => (
@@ -23,9 +20,17 @@ const SpendsMonth = ({ monthSpend }) => {
         width: "100%",
       }}
     >
-      <Text style={customizeText(18, "M", "S")}>Gastos de este mes</Text>
+      <View style={globalStyles.rowSpaceBetw}>
+        <Text style={customizeText(18, "M", "S")}>Gastos de este mes</Text>
+        <TouchableOpacity
+          onPress={() => setModeViewSpend(!modeViewSpend)}
+          style={{ paddingHorizontal: "2.5%" }}
+        >
+          <Feather name="more-horizontal" size={25} color={colors.snow} />
+        </TouchableOpacity>
+      </View>
       <Text style={customizeText(44, "M", "S")} numberOfLines={1}>
-        ${formatNumbers(monthSpend)}
+        ${`${viewMonthSpend()}`}
       </Text>
     </View>
   );

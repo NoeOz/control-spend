@@ -4,10 +4,11 @@ import {
   TraslucentModal,
   StateTraslucentModal,
 } from "../../modals/TraslucentModal";
-import { View, Text } from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import TagTypeSpend from "../TagTypeSpend";
 import ActionsSelectedSpend from "./ActionsSelectedSpend";
 import useSelectedSpend from "../../../hooks/manageSpends/useSelectedSpend";
+import { formatComa } from "../../../helpers/quantityFormat";
 
 export const StateSelectedSpend = () => {
   //watch one spend
@@ -17,9 +18,14 @@ export const StateSelectedSpend = () => {
 
 export const SelectedSpend = (props) => {
   const { selectedSpend, setSelectedSpend, actions = true, trigger } = props;
+  const [updatedSpend, setUpdatedSpend] = useState({});
+  //? modal state
   const manageTraslucentModal = StateTraslucentModal();
-  const { dropSpend, editSpend } = useSelectedSpend();
+  //? actions in spend element
+  const { dropSpend, editSpend, validateSpend } = useSelectedSpend();
+  //? message when is updated or deleted
   const [message, setMessage] = useState("");
+  //? activate inputs to edit
   const [enableEdit, setEnableEdit] = useState(false);
 
   useEffect(() => {
@@ -32,6 +38,9 @@ export const SelectedSpend = (props) => {
   }
 
   function closeViewSelectedSpend() {
+    setUpdatedSpend({});
+    setEnableEdit(false);
+    setMessage("");
     setSelectedSpend(null);
   }
 
@@ -41,7 +50,6 @@ export const SelectedSpend = (props) => {
       setMessage("Listo, se ha eliminado este elemento");
       trigger();
       setTimeout(() => {
-        setMessage("");
         closeViewSelectedSpend();
         manageTraslucentModal.setVisible(false);
       }, 2000);
@@ -49,11 +57,44 @@ export const SelectedSpend = (props) => {
   }
 
   async function handleEditSpend() {
-    setEnableEdit(true);
-    //todo: create inputs to edit values and enabled when enableEdit = true
-    //todo: change icon || place icon to save changes
-    //todo: use function db to update item
-    //todo show message and keep open modal
+    if (!enableEdit) {
+      setUpdatedSpend(selectedSpend);
+      setEnableEdit(true);
+    } else {
+      const validName = validateSpend("str", updatedSpend.name);
+      const validDesc = validateSpend("str", updatedSpend.description);
+      const validAmount = validateSpend("num", updatedSpend.mount);
+      if (validName && validDesc && validAmount) {
+        const res = await editSpend(updatedSpend);
+        if (res) {
+          setMessage("Listo, cambios realizados");
+          trigger();
+          setTimeout(() => {
+            closeViewSelectedSpend();
+            manageTraslucentModal.setVisible(false);
+          }, 2000);
+        }
+      }
+    }
+  }
+
+  function handleEditSpendValues(key, value) {
+    setUpdatedSpend({ ...updatedSpend, [key]: value });
+  }
+
+  /**
+   * The function returns the formatted amount of a selected spend or the original amount if editing is
+   * enabled.
+   * @returns The function `mountSpend()` returns either the formatted amount with commas (if
+   * `enableEdit` is false) or the unformatted amount (if `enableEdit` is true) of the `selectedSpend`
+   * object's `mount` property.
+   */
+  function mountSpend() {
+    const formatAmount = formatComa(
+      updatedSpend?.mount ?? selectedSpend?.mount
+    );
+    if (enableEdit) return updatedSpend?.mount ?? selectedSpend?.mount;
+    else return `$${formatAmount}`;
   }
 
   return (
@@ -61,9 +102,14 @@ export const SelectedSpend = (props) => {
       visible={manageTraslucentModal.visible}
       setVisible={manageTraslucentModal.setVisible}
       managerClose={closeViewSelectedSpend}
-      altStyle={{ justifyContent: "center" }}
     >
-      <View style={{ ...globalStyles.card, backgroundColor: colors.snow }}>
+      <View
+        style={{
+          ...globalStyles.card,
+          backgroundColor: colors.snow,
+          margin: "2.5%",
+        }}
+      >
         {!!message ? (
           <Text style={customizeText(18, "M", "N", "left", { padding: "5%" })}>
             {message}
@@ -84,22 +130,39 @@ export const SelectedSpend = (props) => {
               <TagTypeSpend typeSpend={selectedSpend?.typeSpend} />
             </View>
             <View style={globalStyles.rowSpaceBetw}>
-              <Text
-                style={customizeText(18, "L", "N", "left", {
-                  textTransform: "capitalize",
-                })}
-              >
-                {`${selectedSpend?.name}`}
-              </Text>
-              <Text style={customizeText(22, "M", "N")}>
-                {`$${selectedSpend?.mount}`}
-              </Text>
+              <TextInput
+                editable={enableEdit}
+                style={
+                  enableEdit
+                    ? styles.inputEditable
+                    : customizeText(18, "L", "N", "left")
+                }
+                onChangeText={(val) => handleEditSpendValues("name", val)}
+                value={updatedSpend?.name ?? selectedSpend?.name}
+              />
+              <TextInput
+                editable={enableEdit}
+                keyboardType={"numeric"}
+                style={
+                  enableEdit
+                    ? styles.inputEditable
+                    : customizeText(22, "M", "N")
+                }
+                onChangeText={(val) => handleEditSpendValues("mount", val)}
+                value={`${mountSpend()}`}
+              />
             </View>
-            <Text style={customizeText(18, "M", "N")}>
-              {`${selectedSpend?.description}`}
-            </Text>
+            <TextInput
+              editable={enableEdit}
+              style={
+                enableEdit ? styles.inputEditable : customizeText(18, "M", "N")
+              }
+              onChangeText={(val) => handleEditSpendValues("description", val)}
+              value={updatedSpend?.description ?? selectedSpend?.description}
+            />
             {actions && (
               <ActionsSelectedSpend
+                editSpendEnabled={enableEdit}
                 dropAction={handleDropSpend}
                 editAction={handleEditSpend}
               />
@@ -110,3 +173,13 @@ export const SelectedSpend = (props) => {
     </TraslucentModal>
   );
 };
+
+const styles = StyleSheet.create({
+  inputEditable: {
+    ...globalStyles.input,
+    paddingHorizontal: "2.5%",
+    paddingVertical: "3.5%",
+    backgroundColor: colors.gray_3,
+    ...customizeText(18, "M", "N"),
+  },
+});

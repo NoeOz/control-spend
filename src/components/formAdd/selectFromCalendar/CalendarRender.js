@@ -138,6 +138,18 @@ const CalendarRender = ({ show, changeShow, setSelectedDate }) => {
    * @returns A component that renders a calendar with days of the current month
    */
   const RenderDaysCalendar = () => {
+    function isToday(day) {
+      const today = new Date();
+      const todayMonth = today.getMonth() + 1;
+      const currentMapMonth = monthsEsp[currentMonth - 1].number.toString();
+      if (
+        currentMapMonth == todayMonth.toString() &&
+        day == today.getDate().toString()
+      ) {
+        return style.todayItemDate;
+      } else return style.itemDate;
+    }
+
     return (
       <View>
         {daysMatrix[currentMonth - 1].map((week) => (
@@ -146,7 +158,7 @@ const CalendarRender = ({ show, changeShow, setSelectedDate }) => {
               <TouchableOpacity
                 onPress={() => pressedDay(day)}
                 key={Math.random(100)}
-                style={style.itemDate}
+                style={isToday(day)}
               >
                 <Text
                   style={customizeText(16, "M", "N", "center", {
@@ -172,7 +184,11 @@ const CalendarRender = ({ show, changeShow, setSelectedDate }) => {
   }
 
   return (
-    <TraslucentModal visible={show} setVisible={changeShow}>
+    <TraslucentModal
+      visible={show}
+      setVisible={changeShow}
+      managerClose={() => changeShow(false)}
+    >
       <View style={style.cardCalendar}>
         <Text
           style={customizeText(20, "M", "N", "center", {
@@ -217,10 +233,16 @@ const style = StyleSheet.create({
     borderRadius: 15,
     alignSelf: "center",
     backgroundColor: colors.snow,
-    marginTop: "35%",
   },
   rowBeetwn: { flexDirection: "row", justifyContent: "space-between" },
   itemDate: { padding: "2%", height: 40, width: 40 },
+  todayItemDate: {
+    padding: "2%",
+    height: 40,
+    width: 40,
+    backgroundColor: colors.grape,
+    borderRadius: 100,
+  },
 });
 
 export default CalendarRender;
