@@ -8,15 +8,15 @@ import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 export const selectionColors = [
-  colors.taupe_gray,
-  colors.coffe,
-  colors.lavander,
+  colors.taupe_gray+"99",
+  colors.coffe+"99",
+  colors.lavander+"99",
   colors.grape,
-  colors.honey,
-  colors.cactus_1,
-  colors.tea_green,
-  colors.orange,
-  colors.peach,
+  colors.honey+"99",
+  colors.cactus_1+"99",
+  colors.tea_green+"99",
+  colors.orange+"99",
+  colors.peach+"99",
 ];
 
 const AnimatedCircle = ({ backgroundColor }) => {

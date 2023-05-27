@@ -8,12 +8,13 @@ import {
 } from "../../../styles/styles";
 import ItemCardSpend from "../ItemCardSpend";
 import { useEffect } from "react";
+import Animated, { FadeIn } from "react-native-reanimated";
 
 const Subs = ({ currentSubs = [], setSelectedSpend }) => {
   useEffect(() => {
     return () => {};
   }, [currentSubs]);
-  
+
   return (
     <View style={{ marginBottom: 15 }}>
       <Text style={customizeText(18, "M", "N", "left", { marginBottom: 10 })}>
@@ -27,13 +28,15 @@ const Subs = ({ currentSubs = [], setSelectedSpend }) => {
         data={currentSubs}
         horizontal
         showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <ItemCardSpend
-            item={item}
-            type={"card"}
-            onSelect={setSelectedSpend}
-            showTypeTag={false}
-          />
+        renderItem={({ item, index }) => (
+          <Animated.View entering={FadeIn.duration(600).delay(500 * index)}>
+            <ItemCardSpend
+              item={item}
+              type={"card"}
+              onSelect={setSelectedSpend}
+              showTypeTag={false}
+            />
+          </Animated.View>
         )}
         keyExtractor={(item) => item.id}
         ListEmptyComponent={

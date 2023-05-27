@@ -1,5 +1,5 @@
-import { View } from "react-native";
-import { colors, globalStyles } from "../styles/styles";
+import { Text, View } from "react-native";
+import { colors, customizeText, globalStyles } from "../styles/styles";
 import MoreOn from "../components/spends/MoreOn";
 import SpendsMonth from "../components/spends/SpendsMoth";
 import Charts from "../components/spends/Charts";
@@ -14,7 +14,10 @@ import {
 const Graphics = () => {
   const manageSelectedSpend = StateSelectedSpend();
   const focusScreen = useIsFocused();
-  const { monthSpend, concurrentSpend, spendsByTag } = useGraphics({ focusScreen });
+  const { monthSpend, concurrentSpend, spendsByTag, spendsbyTagPercent } =
+    useGraphics({
+      focusScreen,
+    });
 
   useEffect(() => {
     return () => {};
@@ -27,6 +30,9 @@ const Graphics = () => {
         backgroundColor: colors.backgroundS,
       }}
     >
+      <Text style={customizeText(26, "M", "N", "left", { marginBottom: 15 })}>
+        Durante este mes
+      </Text>
       <SpendsMonth monthSpend={monthSpend} />
       <MoreOn
         concurrentSpend={concurrentSpend}

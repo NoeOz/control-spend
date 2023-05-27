@@ -1,15 +1,28 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import { colors, customizeText, globalStyles } from "../../styles/styles";
 import { formatMK } from "../../helpers/quantityFormat";
-import { Feather } from "@expo/vector-icons";
-import { useState } from "react";
+import { AntDesign } from "@expo/vector-icons";
+import { useEffect, useState } from "react";
+import MatrixNumbers from "../ui/MatrixNumbers";
 
 const SpendsMonth = ({ monthSpend }) => {
   const [modeViewSpend, setModeViewSpend] = useState(false);
+  const [showSpend, setShowSpend] = useState(false);
 
-  function viewMonthSpend() {
+  useEffect(() => {
+    return () => {
+      setModeViewSpend(false);
+      setShowSpend(false);
+    };
+  }, []);
+
+  function changeVisibleSpend() {
+    setShowSpend(!showSpend);
+  }
+
+  function quantityMonthSpend() {
     if (!modeViewSpend) return formatMK(monthSpend);
-    else return `${monthSpend}`;
+    else return monthSpend;
   }
 
   const ThisMonthSpends = () => (
@@ -21,17 +34,28 @@ const SpendsMonth = ({ monthSpend }) => {
       }}
     >
       <View style={globalStyles.rowSpaceBetw}>
-        <Text style={customizeText(18, "M", "S")}>Gastos de este mes</Text>
+        <Text style={customizeText(18, "M", "S")}>Total gastado</Text>
         <TouchableOpacity
           onPress={() => setModeViewSpend(!modeViewSpend)}
           style={{ paddingHorizontal: "2.5%" }}
         >
-          <Feather name="more-horizontal" size={25} color={colors.snow} />
+          <AntDesign name="swap" size={25} color={colors.snow} />
         </TouchableOpacity>
       </View>
-      <Text style={customizeText(44, "M", "S")} numberOfLines={1}>
-        ${`${viewMonthSpend()}`}
-      </Text>
+      {!showSpend ? (
+        <View style={{ flexDirection: "row" }}>
+          <Text style={customizeText(44, "M", "S")}>$</Text>
+          <MatrixNumbers
+            triggerEnd={() => changeVisibleSpend()}
+            styleText={customizeText(44, "M", "S")}
+            maxNumber={10000}
+          />
+        </View>
+      ) : (
+        <Text style={customizeText(44, "M", "S")} numberOfLines={1}>
+          {`$${quantityMonthSpend()}`}
+        </Text>
+      )}
     </View>
   );
 

@@ -12,37 +12,45 @@ import {
   globalStyles,
 } from "../../styles/styles";
 import { formatMK } from "../../helpers/quantityFormat";
+import Animated, { FadeIn } from "react-native-reanimated";
 
 const MoreOn = ({ concurrentSpend, setSelectedSpend }) => {
-  const Item = ({ item }) => (
-    <TouchableOpacity
-      onPress={() => setSelectedSpend(item)}
-      style={styles.itemStyle}
+  const Item = ({ item, index }) => (
+    <Animated.View
+      entering={FadeIn.delay(500 * index)
+        .damping(10)
+        .easing()
+        .duration(600)}
     >
-      <Text
-        style={customizeText(18, "L", "B", "left", {
-          textTransform: "capitalize",
-        })}
-        numberOfLines={1}
+      <TouchableOpacity
+        onPress={() => setSelectedSpend(item)}
+        style={styles.itemStyle}
       >
-        {item.name}
-      </Text>
-      <Text style={customizeText(24, "M", "B")} numberOfLines={1}>
-        {`$${formatMK(item.mount)}`}
-      </Text>
-    </TouchableOpacity>
+        <Text
+          style={customizeText(18, "L", "B", "left", {
+            textTransform: "capitalize",
+          })}
+          numberOfLines={1}
+        >
+          {item.name}
+        </Text>
+        <Text style={customizeText(24, "M", "B")} numberOfLines={1}>
+          {`$${formatMK(item.mount)}`}
+        </Text>
+      </TouchableOpacity>
+    </Animated.View>
   );
 
   return (
     <View style={{ marginVertical: 15 }}>
-      <Text style={customizeText(18, "M", "N")}>
+      <Text style={customizeText(18, "M", "N", "left", { marginLeft: 10 })}>
         Cosas en las que gastas más
       </Text>
       <FlatList
         data={concurrentSpend}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => <Item item={item} />}
+        renderItem={({ item, index }) => <Item item={item} index={index} />}
         keyExtractor={(item) => item.id}
         style={{ marginVertical: 15 }}
         ListEmptyComponent={

@@ -5,6 +5,6 @@ export const firstTime = {
 };
 
 export const welcomeMessage = {
-  title: ["Buenos dias", "Buenas tardes", "Buenas noches"],
+  title: ["buenos dias", "buenas tardes", "buenas noches"],
   content: "",
 };

@@ -1,25 +1,18 @@
 import { ImageBackground, StyleSheet, Text, View } from "react-native";
-import { colors, customizeText, globalStyles } from "../styles/styles";
+import {
+  colors,
+  customizeText,
+  deviceInfo,
+  globalStyles,
+} from "../styles/styles";
 import AnimatedFig from "../components/home/AnimatedFigs";
-import { firstTime, welcomeMessage } from "../constants/welcome";
+import { firstTime } from "../constants/welcome";
 import { useEffect } from "react";
 import useInitial from "../hooks/useInitial";
 
-const Wellcome = () => (
-  <View style={styles.containerFirstTime}>
-    <Text
-      style={customizeText(35, "M", "S", "left", {
-        width: "65%",
-        marginBottom: 5,
-      })}
-    >{`${firstTime.title[0]}`}</Text>
-    <Text
-      style={customizeText(18, "M", "S", "left")}
-    >{`${firstTime.content}`}</Text>
-  </View>
-);
-
 const Hello = ({ navigation }) => {
+  const { dayMemento } = useInitial();
+
   useEffect(() => {
     setTimeout(() => {
       navigation.navigate("HomeTabScreen");
@@ -27,32 +20,16 @@ const Hello = ({ navigation }) => {
     return () => {};
   }, []);
 
-  function dayMemento() {
-    var fecha = new Date();
-    var hora = fecha.getHours();
-    var mensaje;
-
-    if (hora >= 6 && hora < 12) {
-      mensaje = welcomeMessage.title[0];
-    } else if (hora >= 12 && hora < 19) {
-      mensaje = welcomeMessage.title[1];
-    } else {
-      mensaje = welcomeMessage.title[2];
-    }
-
-    return mensaje;
-  }
-
   return (
     <ImageBackground style={styles.containerFirstTime} blurRadius={10}>
       <Text
-        style={customizeText(20, "M", "S", "left", {
+        style={customizeText(35, "M", "S", "left", {
           width: "65%",
         })}
-      >{`${dayMemento()}`}</Text>
+      >{`Hola ${dayMemento()}`}</Text>
       <Text
-        style={customizeText(30, "M", "S", "left")}
-      >{`${"Usuario"}`}</Text>
+        style={customizeText(18, "M", "S", "left")}
+      >{`${firstTime.content}`}</Text>
     </ImageBackground>
   );
 };
@@ -81,10 +58,12 @@ const Home = ({ navigation }) => {
 const styles = StyleSheet.create({
   containerFirstTime: {
     width: "100%",
+    height: deviceInfo.height * 0.3,
+    justifyContent: "space-between",
     padding: "5%",
     zIndex: 100,
     position: "absolute",
-    bottom: "5%",
+    bottom: "25%",
     alignSelf: "center",
     backgroundColor: "rgba(255,255,255,0.3)",
     borderColor: "rgba(500,500,500, 0.4)",

@@ -17,11 +17,12 @@ export const colors = {
   lavander: "#A292B0",
   grape: "#443C6899",
   grape_2: "#443C68",
+  sand: "#E0C097",
   gray_1: "#555555",
-  gray_2: "#a3a3a3",
   gray_3: "#EEEEEE",
   taupe_gray: "#909090",
   cool_gray: "#4B576E",
+  sky: "#A3C7D6",
 
   error: "#C54444",
   backgroundB: "#121212",
