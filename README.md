@@ -16,9 +16,9 @@ Control Spend es una aplicación móvil desarrollada en React Native que te perm
 
 ## Capturas de pantalla
 
-![Ejemplo de app 1](/src/assets/example/example_addSpend.gif)
-![Ejemplo de app 2](/src/assets/example/example_checkChart.gif)
-![Ejemplo de app 3](/src/assets/example/example_editDrop.gif)
+<img src="/src/assets/example/example_addSpend.gif" width="280" height="520"/>
+<img src="/src/assets/example/example_checkChart.gif" width="280" height="520"/>
+<img src="/src/assets/example/example_editDrop.gif" width="280" height="520"/>
 
 ## Instalación
 1. Clona este repositorio en tu máquina local.
