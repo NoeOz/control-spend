@@ -35,12 +35,14 @@ const SpendsMonth = ({ monthSpend }) => {
     >
       <View style={globalStyles.rowSpaceBetw}>
         <Text style={customizeText(18, "M", "S")}>Total gastado</Text>
-        <TouchableOpacity
-          onPress={() => setModeViewSpend(!modeViewSpend)}
-          style={{ paddingHorizontal: "2.5%" }}
-        >
-          <AntDesign name="swap" size={25} color={colors.snow} />
-        </TouchableOpacity>
+        {monthSpend > 999 ? (
+          <TouchableOpacity
+            onPress={() => setModeViewSpend(!modeViewSpend)}
+            style={{ paddingHorizontal: "2.5%" }}
+          >
+            <AntDesign name="swap" size={25} color={colors.snow} />
+          </TouchableOpacity>
+        ) : null}
       </View>
       {!showSpend ? (
         <View style={{ flexDirection: "row" }}>
@@ -67,8 +69,8 @@ const SpendsMonth = ({ monthSpend }) => {
         width: "100%",
       }}
     >
-      <Text style={customizeText(18, "M", "S")}>Vaya!</Text>
-      <Text style={customizeText(20, "I", "S")}>
+      <Text style={customizeText(22, "M", "S")}>Vaya!</Text>
+      <Text style={customizeText(18, "I", "S")}>
         No hay registros de gastos en este mes
       </Text>
     </View>

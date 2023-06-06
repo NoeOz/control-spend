@@ -15,7 +15,7 @@ const Subs = ({ currentSubs = [], setSelectedSpend }) => {
     return () => {};
   }, [currentSubs]);
 
-  return (
+  return currentSubs.length > 0 ? (
     <View style={{ marginBottom: 15 }}>
       <Text style={customizeText(18, "M", "N", "left", { marginBottom: 10 })}>
         Gastos fijos / suscripciones de este mes
@@ -54,6 +54,6 @@ const Subs = ({ currentSubs = [], setSelectedSpend }) => {
         }
       />
     </View>
-  );
+  ) : null;
 };
 export default Subs;

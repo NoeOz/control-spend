@@ -32,13 +32,10 @@ const useManageSpend = () => {
     let tempSubs = [];
     if (globalSpends?.length > 0) {
       globalSpends.forEach((spend) => {
-        if (
-          (!!spend?.dateSpend &&
-            !!spend?.mount &&
-            spend?.typeSpend === "Suscripción") ||
-          spend?.typeSpend === "Fijo"
-        ) {
-          tempSubs.push(spend);
+        const fixMonthSpend = parseInt(spend?.dateSpend.split("/")[1]);
+        if (spend?.typeSpend === "Suscripción" || spend?.typeSpend === "Fijo") {
+          if (fixMonthSpend <= month && fixMonthSpend >= month)
+            tempSubs.push(spend);
         }
       });
       tempSubs.reverse();

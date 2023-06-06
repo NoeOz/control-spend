@@ -64,7 +64,7 @@ const AddSpend = () => {
           alignContent: "center",
         }}
       >
-        <Text style={customizeText(24, "M", "N", "left")}>Agrega un gasto</Text>
+        <Text style={customizeText(24, "M", "N", "left")}>Añade un gasto</Text>
         {validateForm() && (
           <TouchableOpacity
             onPress={() => handleCreateSpend()}

@@ -17,7 +17,7 @@ const OtherSpends = ({ thisMonthSpends = [], setSelectedSpend }) => {
 
   return (
     <View>
-      <Text style={customizeText(18, "M", "N", "left")}>Todo este mes</Text>
+      <Text style={customizeText(18, "M", "N", "left")}>Este mes</Text>
       <FlatList
         data={thisMonthSpends}
         showsVerticalScrollIndicator={false}

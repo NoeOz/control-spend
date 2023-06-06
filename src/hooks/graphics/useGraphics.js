@@ -13,9 +13,11 @@ const useGraphics = ({ focusScreen }) => {
   const [spendsByTag, setSpendsByTag] = useState([0, 0, 0, 0, 0, 0, 0]);
 
   useEffect(() => {
-    getThisMonthSpends();
-    getMoreOnSpends();
-    orderSpendsByTag();
+    if (focusScreen) {
+      getThisMonthSpends();
+      getMoreOnSpends();
+      orderSpendsByTag();
+    }
     return () => {
       clearStates();
     };
@@ -55,9 +57,8 @@ const useGraphics = ({ focusScreen }) => {
       globalSpends.forEach((spend) => {
         if (!!spend?.dateSpend && !!spend?.mount) {
           const fixMonthSpend = parseInt(spend?.dateSpend.split("/")[1]);
-          if (fixMonthSpend <= month && fixMonthSpend >= month - 2) {
+          if (fixMonthSpend <= month && fixMonthSpend >= month)
             spendsLastMonths.push(spend);
-          }
         }
       });
       spendsLastMonths.sort((a, b) => b?.mount - a?.mount);

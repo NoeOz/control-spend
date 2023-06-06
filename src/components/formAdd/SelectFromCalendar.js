@@ -21,7 +21,7 @@ const SelectFromCalendar = ({ dateValue, onSelectDate }) => {
         onPress={() => setShowCalendar(!showCalendar)}
         style={{ ...globalStyles.input, width: "45%" }}
       >
-        <Text style={customizeText(16, "M", "TG", "center")}>
+        <Text style={customizeText(16, "M", "G2", "center")}>
           {selectedDay() ?? "¿Cúando pasó?"}
         </Text>
       </TouchableOpacity>

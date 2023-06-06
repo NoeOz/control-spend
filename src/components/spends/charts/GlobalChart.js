@@ -14,27 +14,27 @@ const GlobalChart = ({ dataSpends }) => {
           },
         ],
       }}
-      width={deviceInfo.width * 0.85} // from react-native
+      width={deviceInfo.width * 0.97} // from react-native
       height={deviceInfo.height * 0.35}
       yAxisLabel="$"
       yAxisInterval={1}
       chartConfig={{
         backgroundColor: colors.snow,
-        backgroundGradientFrom: colors.lavander,
+        backgroundGradientFrom: colors.grape_2,
         backgroundGradientTo: colors.grape_2,
-        decimalPlaces: 0, // optional, defaults to 2dp
+        decimalPlaces: 0,
         color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
         labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
         propsForDots: {
-          r: "4",
+          r: "3",
           strokeWidth: "2",
           stroke: colors.grape,
         },
       }}
       bezier
       style={{
-        marginVertical: 5,
         borderRadius: 15,
+        marginTop: 20
       }}
     />
   );

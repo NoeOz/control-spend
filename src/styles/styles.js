@@ -17,8 +17,10 @@ export const colors = {
   lavander: "#A292B0",
   grape: "#443C6899",
   grape_2: "#443C68",
+  grape_light: "#D0CED9",
   sand: "#E0C097",
   gray_1: "#555555",
+  gray_2: "#a3a3a3",
   gray_3: "#EEEEEE",
   taupe_gray: "#909090",
   cool_gray: "#4B576E",
@@ -42,12 +44,23 @@ export const deviceInfo = {
   os: Platform.OS,
 };
 
+/**
+ * This function takes in parameters for size, font, color, alignment, and other styles
+ * and returns an object with CSS styles for text customization.
+ * @param size - The font size of the text.
+ * @param font - It can be : "I" for italic, "L" for light, "M" for medium, or "B" for bold.
+ * @param color - The color represents the color of the text. It can be: "G" - grape_2, "R" - error, "N" - noir, "G2" - gray_2, or "S" - snow.
+ * @param align - Alignment of the text (default is "left")
+ * @param other - The "other" parameter is for additional properties inside object style
+ * @returns The function `customizeText` returns an object with properties `fontSize`, `fontFamily`,
+ * `color`, `textAlign`, and any additional properties passed in through the `other` parameter.
+ */
 export const customizeText = (size, font, color, align = "left", other) => {
   const identifyColor = {
     G: colors.grape_2,
     R: colors.error,
     N: colors.noir,
-    TG: colors.gray_2,
+    G2: colors.gray_2,
     S: colors.snow,
   };
 

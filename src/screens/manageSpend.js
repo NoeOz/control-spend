@@ -22,7 +22,7 @@ const ManageSpend = () => {
   const { getThisMonthSubs, handleGetSpendsThisMonth } = useManageSpend();
 
   useEffect(() => {
-    getValues();
+    if (focusScreen) getValues();
     return () => {};
   }, [focusScreen, recharge]);
 

@@ -44,7 +44,7 @@ const MoreOn = ({ concurrentSpend, setSelectedSpend }) => {
   return (
     <View style={{ marginVertical: 15 }}>
       <Text style={customizeText(18, "M", "N", "left", { marginLeft: 10 })}>
-        Cosas en las que gastas más
+        Cosas en las que has gastado más este mes
       </Text>
       <FlatList
         data={concurrentSpend}
@@ -54,7 +54,9 @@ const MoreOn = ({ concurrentSpend, setSelectedSpend }) => {
         keyExtractor={(item) => item.id}
         style={{ marginVertical: 15 }}
         ListEmptyComponent={
-          <View style={{ ...styles.itemStyle, width: "98%" }}>
+          <View
+            style={{ ...styles.itemStyle, width: "80%", alignSelf: "center" }}
+          >
             <Text style={customizeText(18, "L", "B", "left")}>
               No hay suficientes gastos para determinar esto :(
             </Text>
@@ -70,7 +72,7 @@ const styles = StyleSheet.create({
     ...globalStyles.card,
     width: deviceInfo.width * 0.3,
     height: deviceInfo.width * 0.25,
-    backgroundColor: colors.snow,
+    backgroundColor: colors.grape_light,
     alignItems: "center",
     justifyContent: "center",
     marginHorizontal: 5,
