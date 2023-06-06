@@ -10,7 +10,7 @@ Control Spend es una aplicación móvil desarrollada en React Native que te perm
 - Seguridad de datos: Tus datos están seguros y solo accesibles por ti, ya que la aplicación se puede utilizar sin conexión a internet.
 
 ## Ejemplo de uso
-![Captura de pantalla 1](/src/assets/example/example_controlSpend.mp4)
+![[Video uso de app] (https://github.com/NoeOz/control-spend/blob/master/src/assets/example/example_controlSpend.mp4)](https://github.com/NoeOz/control-spend/blob/master/src/assets/example/example_controlSpend.mp4)
 
 ## Instalación
 1. Clona este repositorio en tu máquina local.
