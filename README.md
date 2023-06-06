@@ -9,8 +9,16 @@ Control Spend es una aplicación móvil desarrollada en React Native que te perm
 - Estadísticas y gráficos: Visualiza tus gastos de forma clara y concisa mediante gráficos interactivos.
 - Seguridad de datos: Tus datos están seguros y solo accesibles por ti, ya que la aplicación se puede utilizar sin conexión a internet.
 
-## Ejemplo de uso
-![[Video uso de app] (https://github.com/NoeOz/control-spend/blob/master/src/assets/example/example_controlSpend.mp4)](https://github.com/NoeOz/control-spend/blob/master/src/assets/example/example_controlSpend.mp4)
+## Features
+- [ ] Establecimiento de metas: Establece metas de gastos mensuales y realiza un seguimiento de tu progreso.
+- [ ] Recordatorios: Configura recordatorios para ayudarte a mantener tus gastos bajo control.
+- [ ] Exportación de datos: Exporta tus datos de gastos en formatos populares como CSV o Excel.
+
+## Capturas de pantalla
+
+![Ejemplo de app 1](/src/assets/example/example_addSpend.gif)
+![Ejemplo de app 2](/src/assets/example/example_checkChart.gif)
+![Ejemplo de app 3](/src/assets/example/example_editDrop.gif)
 
 ## Instalación
 1. Clona este repositorio en tu máquina local.
@@ -60,9 +68,5 @@ git push origin mi-rama
 5. Abre una Pull Request en este repositorio y describe tus cambios.
 Agradezco de antemano tus contribuciones al proyecto.
 
-## Licencia
-
-Control Spend está disponible bajo la licencia [MIT](LICENSE).
-
 ---
-© 2023 Control Spend. Todos los derechos reservados.
+© 2023 Control Spend.
