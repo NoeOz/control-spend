@@ -26,7 +26,7 @@ const CardThisMonth = ({
       if (monthSpend > 0)
         cardAnimated.value = { transformY: deviceInfo.height * 0.37 };
       else cardAnimated.value = { transformY: 0 };
-    }, 1000);
+    }, 2500);
   }
 
   const cardAnimatedStyles = useAnimatedStyle(() => {
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     height: deviceInfo.height * 0.9,
     position: "absolute",
-    top: deviceInfo.height * 0.13,
+    top: deviceInfo.height * 0.145,
   },
 });
 

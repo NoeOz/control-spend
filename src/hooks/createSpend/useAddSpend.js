@@ -34,7 +34,6 @@ const useAddSpend = () => {
     } else setFormAddSpend({ ...formAddSpend, [key]: value });
   }
 
-  
   /**
    * The function checks if a given value is a valid number greater than zero.
    * @param value - The value parameter is a variable that represents a number that needs to be
@@ -57,9 +56,19 @@ const useAddSpend = () => {
    * the formAddSpend object is different from the initialFormAddValues object and is not empty.
    */
   function validateValueForm(key) {
-    if (formAddSpend[key] !== initialFormAddValues[key] && !!formAddSpend[key])
-      return true;
-    else return false;
+    //? check date
+    if (key === "dateSpend") {
+      if (!!formAddSpend.dateSpend.DD) return true;
+      else return false;
+    } else {
+      //? another value
+      if (
+        formAddSpend[key] !== initialFormAddValues[key] &&
+        !!formAddSpend[key]
+      )
+        return true;
+      else return false;
+    }
   }
 
   /**

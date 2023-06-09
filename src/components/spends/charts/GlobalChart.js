@@ -7,13 +7,15 @@ const GlobalChart = ({ dataSpends }) => {
   return (
     <LineChart
       data={{
-        labels: tagsTypesSpends.map((objeto) => objeto.text.slice(0, 4)),
+        labels: tagsTypesSpends.map((objeto) => objeto.text.slice(0, 6) + "."),
         datasets: [
           {
             data: dataSpends,
           },
         ],
       }}
+      segments={5}
+      fromZero={true}
       width={deviceInfo.width * 0.97} // from react-native
       height={deviceInfo.height * 0.35}
       yAxisLabel="$"
@@ -34,7 +36,7 @@ const GlobalChart = ({ dataSpends }) => {
       bezier
       style={{
         borderRadius: 15,
-        marginTop: 20
+        marginTop: 20,
       }}
     />
   );

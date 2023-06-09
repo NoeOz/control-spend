@@ -1,4 +1,10 @@
-import { ImageBackground, StyleSheet, Text, View } from "react-native";
+import {
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import {
   colors,
   customizeText,
@@ -13,23 +19,21 @@ import useInitial from "../hooks/useInitial";
 const Hello = ({ navigation }) => {
   const { dayMemento } = useInitial();
 
-  useEffect(() => {
-    setTimeout(() => {
-      navigation.navigate("HomeTabScreen");
-    }, 2100);
-    return () => {};
-  }, []);
+  function goHome() {
+    navigation.navigate("HomeTabScreen");
+  }
 
   return (
     <ImageBackground style={styles.containerFirstTime} blurRadius={10}>
-      <Text
-        style={customizeText(35, "M", "S", "left", {
-          width: "65%",
-        })}
-      >{`Hola ${dayMemento()}`}</Text>
-      <Text
-        style={customizeText(18, "M", "S", "left")}
-      >{`${firstTime.content}`}</Text>
+      <Text style={customizeText(30, "B", "S", "left")}>CONTROL SPEND</Text>
+      <Text style={customizeText(18, "M", "S", "left")}>
+        Hola, bienvenido a tu aplicación de control de gastos.
+      </Text>
+      <TouchableOpacity onPress={() => goHome()}>
+        <Text style={customizeText(18, "L", "S", "right")}>
+          C O N T I N U A R
+        </Text>
+      </TouchableOpacity>
     </ImageBackground>
   );
 };
@@ -57,14 +61,14 @@ const Home = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   containerFirstTime: {
-    width: "100%",
-    height: deviceInfo.height * 0.3,
+    width: "90%",
+    height: deviceInfo.height * 0.25,
     justifyContent: "space-between",
     padding: "5%",
     zIndex: 100,
     position: "absolute",
-    bottom: "25%",
-    alignSelf: "center",
+    bottom: "10%",
+    right: "2%",
     backgroundColor: "rgba(255,255,255,0.3)",
     borderColor: "rgba(500,500,500, 0.4)",
     borderRadius: 10,

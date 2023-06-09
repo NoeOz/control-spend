@@ -5,13 +5,24 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { colors, customizeText, globalStyles } from "../styles/styles";
+import {
+  colors,
+  customizeText,
+  deviceInfo,
+  globalStyles,
+} from "../styles/styles";
 import SelectTypeSpend from "../components/formAdd/SelectTypeSpend";
 import SelectFromCalendar from "../components/formAdd/SelectFromCalendar";
 import { Feather } from "@expo/vector-icons";
 import useAddSpend from "../hooks/createSpend/useAddSpend";
 import { CustomAlert, useStateAlert } from "../components/modals/CustomAlert";
 import TipsInput from "../components/formAdd/TipsInput";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
+import { useEffect } from "react";
 
 const AddSpend = () => {
   const {
@@ -23,6 +34,17 @@ const AddSpend = () => {
     validateForm,
   } = useAddSpend();
   const manageAlert = useStateAlert();
+
+  const cardAnimated = useSharedValue({ transformY: deviceInfo.height * 0.15 });
+
+  useEffect(() => {
+    if (validateForm())
+      cardAnimated.value = { transformY: 0 };
+
+    return () => {
+      cardAnimated.value = { transformY: deviceInfo.height * 0.15 };
+    };
+  }, [formAddSpend]);
 
   async function handleCreateSpend() {
     let dataSpend = formAddSpend;
@@ -44,8 +66,22 @@ const AddSpend = () => {
         manageAlert.clearStates();
       }, 2000);
       setFormAddSpend(initialFormAddValues);
+      cardAnimated.value = { transformY: deviceInfo.height * 0.15 };
     }
   }
+
+  const cardAnimatedStyles = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateY: withTiming(cardAnimated.value.transformY, {
+            duration: 1500,
+            damping: 25,
+          }),
+        },
+      ],
+    };
+  });
 
   return (
     <View
@@ -58,22 +94,7 @@ const AddSpend = () => {
         {...manageAlert}
         changeVisibility={(value) => manageAlert.setVisibleAlert(value)}
       />
-      <View
-        style={{
-          ...globalStyles.rowSpaceBetw,
-          alignContent: "center",
-        }}
-      >
-        <Text style={customizeText(24, "M", "N", "left")}>Añade un gasto</Text>
-        {validateForm() && (
-          <TouchableOpacity
-            onPress={() => handleCreateSpend()}
-            style={styles.buttonAdd}
-          >
-            <Feather name="plus" size={25} color={colors.grape} />
-          </TouchableOpacity>
-        )}
-      </View>
+      <Text style={customizeText(24, "M", "N", "left")}>Añade un gasto</Text>
       <View style={{ marginVertical: 15 }}>
         <TextInput
           placeholder="¿En qué gastaste?"
@@ -109,18 +130,40 @@ const AddSpend = () => {
           onSelectType={changeSpendValues}
         />
       </View>
+      <Animated.View style={[styles.containerButton, cardAnimatedStyles]}>
+        <TouchableOpacity
+          onPress={() => handleCreateSpend()}
+          style={styles.buttonAdd}
+        >
+          <Text style={customizeText(18, "M", "G", "left")}>
+            Agregar este gasto
+          </Text>
+          <Feather name="plus" size={25} color={colors.grape} />
+        </TouchableOpacity>
+      </Animated.View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   buttonAdd: {
+    width: "80%",
     padding: "2%",
-    width: "12%",
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignSelf: "center",
     alignItems: "center",
     borderRadius: 15,
     backgroundColor: colors.lavander,
+  },
+  containerButton: {
+    position: "absolute",
+    bottom: 0,
+    width: deviceInfo.width,
+    paddingVertical: "5%",
+    backgroundColor: colors.snow,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
   },
 });
 
