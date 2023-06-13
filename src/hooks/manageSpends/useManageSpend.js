@@ -2,9 +2,7 @@ import { useSelector } from "react-redux";
 
 const useManageSpend = () => {
   const globalState = useSelector((state) => state.globalState);
-  //today date
-  const d = new Date();
-  const month = d.getMonth() + 1;
+  const { selectedMonth } = globalState;
 
   function handleGetSpendsThisMonth() {
     const globalSpends = globalState.spends;
@@ -17,7 +15,7 @@ const useManageSpend = () => {
           spend?.typeSpend !== "Fijo"
         ) {
           const fixMonthSpend = parseInt(spend?.dateSpend.split("/")[1]);
-          if (parseInt(fixMonthSpend) === month) {
+          if (parseInt(fixMonthSpend) === selectedMonth) {
             tempData.push(spend);
           }
         }
@@ -34,7 +32,7 @@ const useManageSpend = () => {
       globalSpends.forEach((spend) => {
         const fixMonthSpend = parseInt(spend?.dateSpend.split("/")[1]);
         if (spend?.typeSpend === "Suscripción" || spend?.typeSpend === "Fijo") {
-          if (fixMonthSpend <= month && fixMonthSpend >= month)
+          if (fixMonthSpend <= selectedMonth && fixMonthSpend >= selectedMonth)
             tempSubs.push(spend);
         }
       });

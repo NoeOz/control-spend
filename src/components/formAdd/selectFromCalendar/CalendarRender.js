@@ -4,8 +4,12 @@ import { daysEsp, monthsEsp } from "../../../constants/calendarData";
 import { colors, customizeText, globalStyles } from "../../../styles/styles";
 import { TraslucentModal } from "../../modals/TraslucentModal";
 import { Feather } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 
 const CalendarRender = ({ show, changeShow, setSelectedDate }) => {
+  const globalState = useSelector((state) => state.globalState);
+  const { thisMonth } = globalState;
+
   const [daysMatrix, setDaysMatrix] = useState(new Array());
   const [currentMonth, setCurrentMonth] = useState(0);
   const [currentYear, setCurrentYear] = useState(0);
@@ -180,7 +184,8 @@ const CalendarRender = ({ show, changeShow, setSelectedDate }) => {
    */
   function controlMonth(value) {
     const newMonth = currentMonth + value;
-    if (newMonth <= 12 && newMonth >= 1) setCurrentMonth(newMonth);
+    if (newMonth <= 12 && newMonth >= 1 && newMonth <= thisMonth)
+      setCurrentMonth(newMonth);
   }
 
   return (

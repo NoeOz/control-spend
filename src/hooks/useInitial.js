@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import useOperations from "../database/useOperations";
-import { setSpends } from "../redux/globalState";
+import { setSelectedMonth, setSpends, setThisMonth } from "../redux/globalState";
 import { welcomeMessage } from "../constants/welcome";
 
 const useInitial = () => {
@@ -14,6 +14,15 @@ const useInitial = () => {
     const recoverSpends = await getSpends();
     if (recoverSpends != null && recoverSpends != false)
       dispatch(setSpends(recoverSpends?.rows?._array));
+  }
+
+  function saveTodayMonth() {
+    //today date
+    const d = new Date();
+    const month = d.getMonth() + 1;
+
+    dispatch(setThisMonth(month));
+    dispatch(setSelectedMonth(month));
   }
 
   function dayMemento() {
@@ -32,7 +41,7 @@ const useInitial = () => {
     return mensaje;
   }
 
-  return { recoverDataSpends, dayMemento };
+  return { recoverDataSpends, dayMemento, saveTodayMonth };
 };
 
 export default useInitial;

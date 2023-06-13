@@ -9,15 +9,20 @@ import {
 import ItemCardSpend from "../ItemCardSpend";
 import { useEffect } from "react";
 import Animated, { FadeIn } from "react-native-reanimated";
+import useMonths from "../../../hooks/months/useMonths";
 
 const OtherSpends = ({ thisMonthSpends = [], setSelectedSpend }) => {
+  const { titleManageMonth } = useMonths();
+
   useEffect(() => {
     return () => {};
   }, [thisMonthSpends]);
 
   return (
     <View>
-      <Text style={customizeText(18, "M", "N", "left")}>Este mes</Text>
+      <Text style={customizeText(20, "M", "N", "left")}>
+        {titleManageMonth("Spends")}
+      </Text>
       <FlatList
         data={thisMonthSpends}
         showsVerticalScrollIndicator={false}

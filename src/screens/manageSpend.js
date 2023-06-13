@@ -9,8 +9,11 @@ import Subs from "../components/manageSpends/options/Subs";
 import OtherSpends from "../components/manageSpends/options/OtherSpends";
 import { useIsFocused } from "@react-navigation/native";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const ManageSpend = () => {
+  const globalState = useSelector((state) => state.globalState);
+  const { selectedMonth } = globalState;
   const manageSelectedSpend = StateSelectedSpend();
   const focusScreen = useIsFocused();
   // Spends states
@@ -22,9 +25,9 @@ const ManageSpend = () => {
   const { getThisMonthSubs, handleGetSpendsThisMonth } = useManageSpend();
 
   useEffect(() => {
-    if (focusScreen) getValues();
+    if (focusScreen || selectedMonth) getValues();
     return () => {};
-  }, [focusScreen, recharge]);
+  }, [focusScreen, recharge, selectedMonth]);
 
   function getValues() {
     const subs = getThisMonthSubs();

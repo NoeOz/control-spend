@@ -124,9 +124,18 @@ export const SelectedSpend = (props) => {
                 zIndex: 100,
               }}
             >
-              <Text style={customizeText(18, "I", "N")}>
-                {`${selectedSpend?.dateSpend}`}
-              </Text>
+              <View
+                style={{
+                  backgroundColor: colors.gray_3,
+                  borderRadius: 15,
+                  paddingHorizontal: 10,
+                  paddingVertical: 5,
+                }}
+              >
+                <Text style={customizeText(18, "I", "N")}>
+                  {`${selectedSpend?.dateSpend}`}
+                </Text>
+              </View>
               <TagTypeSpend typeSpend={selectedSpend?.typeSpend} />
             </View>
             <View style={globalStyles.rowSpaceBetw}>
@@ -135,7 +144,7 @@ export const SelectedSpend = (props) => {
                 style={
                   enableEdit
                     ? styles.inputEditable
-                    : customizeText(18, "L", "N", "left")
+                    : customizeText(20, "L", "N", "left")
                 }
                 onChangeText={(val) => handleEditSpendValues("name", val)}
                 value={updatedSpend?.name ?? selectedSpend?.name}
@@ -155,7 +164,7 @@ export const SelectedSpend = (props) => {
             <TextInput
               editable={enableEdit}
               style={
-                enableEdit ? styles.inputEditable : customizeText(18, "M", "N")
+                enableEdit ? styles.inputEditable : customizeText(20, "M", "N")
               }
               onChangeText={(val) => handleEditSpendValues("description", val)}
               value={updatedSpend?.description ?? selectedSpend?.description}

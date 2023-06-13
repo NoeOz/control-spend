@@ -4,16 +4,14 @@ import { tagsTypesSpends } from "../../constants/TagsTypeSpends";
 
 const useGraphics = ({ focusScreen }) => {
   const globalState = useSelector((state) => state.globalState);
-  //today date
-  const d = new Date();
-  const month = d.getMonth() + 1;
+  const { selectedMonth } = globalState;
 
   const [monthSpend, setMonthSpend] = useState(0);
   const [concurrentSpend, setConcurrentSpend] = useState([]);
   const [spendsByTag, setSpendsByTag] = useState([0, 0, 0, 0, 0, 0, 0]);
 
   useEffect(() => {
-    if (focusScreen) {
+    if (focusScreen || selectedMonth) {
       getThisMonthSpends();
       getMoreOnSpends();
       orderSpendsByTag();
@@ -21,7 +19,7 @@ const useGraphics = ({ focusScreen }) => {
     return () => {
       clearStates();
     };
-  }, [focusScreen]);
+  }, [focusScreen, selectedMonth]);
 
   function clearStates() {
     setMonthSpend(0);
@@ -40,7 +38,7 @@ const useGraphics = ({ focusScreen }) => {
           //? get the month registered
           const fixMonthSpend = parseInt(spend?.dateSpend.split("/")[1]);
           //? compare teh month in spend and the actual month
-          if (parseInt(fixMonthSpend) === month) {
+          if (parseInt(fixMonthSpend) === selectedMonth) {
             thisMonthSpend += spend?.mount;
           }
         }
@@ -57,7 +55,7 @@ const useGraphics = ({ focusScreen }) => {
       globalSpends.forEach((spend) => {
         if (!!spend?.dateSpend && !!spend?.mount) {
           const fixMonthSpend = parseInt(spend?.dateSpend.split("/")[1]);
-          if (fixMonthSpend <= month && fixMonthSpend >= month)
+          if (fixMonthSpend <= selectedMonth && fixMonthSpend >= selectedMonth)
             spendsLastMonths.push(spend);
         }
       });
@@ -77,7 +75,7 @@ const useGraphics = ({ focusScreen }) => {
       globalSpends.forEach((spend) => {
         if (!!spend?.dateSpend && !!spend?.mount) {
           const fixMonthSpend = parseInt(spend?.dateSpend.split("/")[1]);
-          if (parseInt(fixMonthSpend) === month) {
+          if (parseInt(fixMonthSpend) === selectedMonth) {
             const position = tagsTypesSpends.findIndex(
               (element) => spend.typeSpend == element.text
             );

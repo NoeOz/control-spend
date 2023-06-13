@@ -25,12 +25,12 @@ const Hello = ({ navigation }) => {
 
   return (
     <ImageBackground style={styles.containerFirstTime} blurRadius={10}>
-      <Text style={customizeText(30, "B", "S", "left")}>CONTROL SPEND</Text>
+      <Text style={customizeText(26, "B", "S", "left")}>CONTROL SPEND</Text>
       <Text style={customizeText(18, "M", "S", "left")}>
         Hola, bienvenido a tu aplicación de control de gastos.
       </Text>
       <TouchableOpacity onPress={() => goHome()}>
-        <Text style={customizeText(18, "L", "S", "right")}>
+        <Text style={customizeText(16, "L", "S", "right")}>
           C O N T I N U A R
         </Text>
       </TouchableOpacity>
@@ -39,10 +39,11 @@ const Hello = ({ navigation }) => {
 };
 
 const Home = ({ navigation }) => {
-  const { recoverDataSpends } = useInitial();
+  const { recoverDataSpends, saveTodayMonth } = useInitial();
 
   useEffect(() => {
     recoverDataSpends();
+    saveTodayMonth();
     return () => {};
   }, []);
 

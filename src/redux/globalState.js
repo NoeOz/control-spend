@@ -4,6 +4,8 @@ const initialState = {
   userInformation: {},
   spends: [],
   editSpend: {},
+  thisMonth: 0,
+  selectedMonth: 0,
 };
 
 const globalState = createSlice({
@@ -22,10 +24,22 @@ const globalState = createSlice({
     setEditSpend: (state, action) => {
       state.editSpend = action.payload;
     },
+    setThisMonth: (state, action) => {
+      state.thisMonth = action.payload;
+    },
+    setSelectedMonth: (state, action) => {
+      state.selectedMonth = action.payload;
+    },
   },
 });
 
-export const { setUser, dropUser, setSpends, setEditSpend } =
-  globalState.actions;
+export const {
+  setUser,
+  dropUser,
+  setSpends,
+  setEditSpend,
+  setThisMonth,
+  setSelectedMonth,
+} = globalState.actions;
 
 export default globalState.reducer;

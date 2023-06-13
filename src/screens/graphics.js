@@ -1,5 +1,10 @@
-import { StyleSheet, Text, View } from "react-native";
-import { colors, customizeText, deviceInfo } from "../styles/styles";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  colors,
+  customizeText,
+  deviceInfo,
+  globalStyles,
+} from "../styles/styles";
 import Charts from "../components/spends/Charts";
 import useGraphics from "../hooks/graphics/useGraphics";
 import { useIsFocused } from "@react-navigation/native";
@@ -12,6 +17,10 @@ import CardThisMonth from "../components/spends/CardThisMonth";
 import useInitial from "../hooks/useInitial";
 import TextAuto from "../components/ui/TextAuto";
 import Animated, { FadeIn } from "react-native-reanimated";
+import { MaterialIcons } from "@expo/vector-icons";
+import { StateTraslucentModal } from "../components/modals/TraslucentModal";
+import SelectMonth from "../components/months/SelectMonth";
+import useMonths from "../hooks/months/useMonths";
 
 const MessageInit = () => {
   const { dayMemento } = useInitial();
@@ -20,7 +29,7 @@ const MessageInit = () => {
   useEffect(() => {
     setTimeout(() => {
       setSizeText(18);
-    }, 2500);
+    }, 2300);
     return () => {};
   }, []);
 
@@ -35,18 +44,9 @@ const MessageInit = () => {
   );
 };
 
-const Graphics = () => {
+const MonthOptions = ({ showSelectMonth }) => {
   const [textInit, setTextInit] = useState(true);
-  const manageSelectedSpend = StateSelectedSpend();
-  const focusScreen = useIsFocused();
-  const { monthSpend, concurrentSpend, spendsByTag, spendsbyTagPercent } =
-    useGraphics({
-      focusScreen,
-    });
-
-  useEffect(() => {
-    return () => {};
-  }, [focusScreen]);
+  const { titleManageMonth } = useMonths();
 
   useEffect(() => {
     changeTextInit();
@@ -58,6 +58,48 @@ const Graphics = () => {
       if (textInit) setTextInit(false);
     }, 2500);
   }
+
+  return !textInit ? (
+    <View
+      style={{
+        ...globalStyles.rowSpaceBetw,
+        paddingHorizontal: "5%",
+        marginBottom: 15,
+        alignItems: "center",
+      }}
+    >
+      <Animated.Text
+        entering={FadeIn.duration(2500).damping(30)}
+        style={customizeText(30, "M", "S", "left", {})}
+      >
+        {titleManageMonth("Chart")}
+      </Animated.Text>
+      <TouchableOpacity onPress={() => showSelectMonth(true)}>
+        <MaterialIcons name="date-range" size={25} color={colors.snow} />
+      </TouchableOpacity>
+    </View>
+  ) : (
+    <Text
+      style={customizeText(30, "M", "S", "left", {
+        marginBottom: 15,
+        marginLeft: "5%",
+      })}
+    />
+  );
+};
+
+const Graphics = () => {
+  const manageSelectedSpend = StateSelectedSpend();
+  const focusScreen = useIsFocused();
+  const manageTraslucentModal = StateTraslucentModal();
+  const { monthSpend, concurrentSpend, spendsByTag, spendsbyTagPercent } =
+    useGraphics({
+      focusScreen,
+    });
+
+  useEffect(() => {
+    return () => {};
+  }, [focusScreen]);
 
   function checkValidData() {
     return spendsByTag.every((spend) => spend === 0);
@@ -72,24 +114,7 @@ const Graphics = () => {
       }
     >
       <MessageInit />
-      {!textInit ? (
-        <Animated.Text
-          entering={FadeIn.duration(2500).damping(30)}
-          style={customizeText(30, "M", "S", "left", {
-            marginBottom: 15,
-            marginLeft: "5%",
-          })}
-        >
-          Durante este mes
-        </Animated.Text>
-      ) : (
-        <Text
-          style={customizeText(30, "M", "S", "left", {
-            marginBottom: 15,
-            marginLeft: "5%",
-          })}
-        />
-      )}
+      <MonthOptions showSelectMonth={manageTraslucentModal.setVisible} />
       {!checkValidData() ? (
         <Charts dataSpends={spendsByTag} />
       ) : (
@@ -104,6 +129,7 @@ const Graphics = () => {
         concurrentSpend={concurrentSpend}
         manageSelectedSpend={manageSelectedSpend}
       />
+      <SelectMonth manageModal={manageTraslucentModal} />
       <SelectedSpend {...manageSelectedSpend} actions={false} />
     </View>
   );

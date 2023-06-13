@@ -11,7 +11,7 @@ const AllSpends = () => {
       <Text style={customizeText(18, "M", "N", "left")}>Todos tus gastos</Text>
       <FlatList
         data={allSpends}
-        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <ItemCardSpend
             item={item}
