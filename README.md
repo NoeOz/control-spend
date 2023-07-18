@@ -10,6 +10,8 @@ Control Spend es una aplicación móvil desarrollada en React Native que te perm
 - Seguridad de datos: Tus datos están seguros y solo accesibles por ti, ya que la aplicación se puede utilizar sin conexión a internet.
 
 ## Features
+- [ ] Ingresos: Poder guardar mi ingreso y con base a ello hacer métricas o establecer avance de posibles metas
+- [ ] Ahorros / Apartados: Establecer apartados (ej: fondo de ahorro de emergencia, ahorro, inversiones) 
 - [ ] Establecimiento de metas: Establece metas de gastos mensuales y realiza un seguimiento de tu progreso.
 - [ ] Recordatorios: Configura recordatorios para ayudarte a mantener tus gastos bajo control.
 - [ ] Exportación de datos: Exporta tus datos de gastos en formatos populares como CSV o Excel.
